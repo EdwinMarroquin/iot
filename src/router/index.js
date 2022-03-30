@@ -12,6 +12,17 @@ const router = createRouter({
       component: () => import("../views/HomeView.vue"),
     },
     {
+      path: "/Sensors",
+      name: "Sensors",
+      component: () => import("../views/SensorsView.vue"),
+    },
+    {
+      path: "/Sensor/:id",
+      name: "Sensor",
+      props: true,
+      component: () => import("../views/SensorView.vue"),
+    },
+    {
       path: "/collaborators",
       name: "collaborators",
       component: () => import("../views/CollaboratorsView.vue"),
