@@ -1,0 +1,31 @@
+{
+  "name": "hydro",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "vite build",
+    "test:unit": "vitest --environment jsdom",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "dev": "vite --host",
+    "preview": "vite preview --port 5050 --host localhost"
+  },
+  "dependencies": {
+    "pinia": "^2.0.12",
+    "register-service-worker": "^1.7.2",
+    "vue": "^3.2.31",
+    "vue-router": "^4.0.14"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.1",
+    "@vitejs/plugin-vue": "^2.2.4",
+    "@vue/cli-plugin-pwa": "~5.0.0",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/test-utils": "^2.0.0-rc.17",
+    "eslint": "^8.11.0",
+    "eslint-plugin-vue": "^8.5.0",
+    "jsdom": "^19.0.0",
+    "prettier": "^2.6.0",
+    "sass": "^1.49.9",
+    "vite": "^2.8.6",
+    "vitest": "^0.7.4"
+  }
+}
