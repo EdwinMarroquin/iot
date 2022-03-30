@@ -19,7 +19,7 @@
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.setDebugOutput(true);
 
   pinMode(ESP8266_LED, OUTPUT);
@@ -59,6 +59,7 @@ void loop()
   SaveThingSpeak(t, h);
   SaveFirebase(t, h);
   getGEOLOC();
+  Serial.println("\{\"d\":"+String(dataTime)+",\"t\":"+String(t)+",\"h\":"+String(h)+"}");
 
   digitalWrite(ESP8266_LED, LOW);
 

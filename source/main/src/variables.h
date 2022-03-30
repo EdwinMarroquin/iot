@@ -16,7 +16,7 @@ float h = 0.0;
 
 int d = 10000;
 long dataTime = 0;
-int utcOffset = -5;
+int utcOffset = 0;
 String stationTime = "";
 // GMT+5 =  5
 // GMT-5 =  -5
