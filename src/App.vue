@@ -16,5 +16,9 @@ import "@/assets/scss/app.scss";
 
 import { ref } from "vue";
 
-const listRoutes = ref(["home", "sensors", "collaborators"]);
+const listRoutes = ref([
+  { label: "home", icon: "home" },
+  { label: "sensors", icon: "sensor-cloud" },
+  { label: "collaborators", icon: "users" },
+]);
 </script>

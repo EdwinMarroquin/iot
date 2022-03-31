@@ -2,7 +2,10 @@
   <nav class="navigate">
     <ul>
       <li v-for="route in routes">
-        <router-link :to="route">{{ route.toUpperCase() }}</router-link>
+        <router-link :to="'/'+route.label">
+          <i :class="['fad', `fa-${route.icon}`]"></i>
+          {{ route.label.toUpperCase() }}
+        </router-link>
       </li>
 <!--
       <li>
@@ -21,7 +24,7 @@
         </router-link>
       </li> -->
     </ul>
-    
+
   </nav>
 </template>
 
@@ -62,7 +65,7 @@ defineProps({
       flex: 1;
       text-align: center;
       @media screen and (min-width: 768px) {
-        margin: 1rem 1rem 0 1rem;
+        // margin: 1rem 1rem 0 1rem;
         text-align: left;
       }
 

@@ -1,15 +1,20 @@
 <template>
   <div class="about">
-    <CardUser v-for="(user, key) in users" :key="key" :user="user"/>
+    <CardSensor
+      v-for="(station, key) in listStations"
+      :key="key"
+      :id="station.id"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import collaborators from "@/data/collaborators.js";
-import CardUser from "../components/cardUser.vue";
+import {stations} from "@/data/stations.js";
+// import NavigateComponent from "../components/navigateComponent.vue";
+import CardSensor from "../components/cardSensor.vue";
 
-const users = ref(collaborators);
+const listStations = ref(stations);
 </script>
 
 <style lang="scss" scoped>

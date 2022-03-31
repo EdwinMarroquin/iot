@@ -40,9 +40,9 @@ body, #app {
 
 .main--wrapper main {
     flex: 1;
-    margin: .5rem 0;
-    height: calc(100% - 3rem);
+    height: calc(100% - 1rem);
     overflow-y: auto;
+    margin: .5rem;
 
 }
 

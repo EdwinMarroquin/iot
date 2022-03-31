@@ -1,7 +1,7 @@
 <template>
   <h1>Acerca del proyecto</h1>
   <br/>
-  <p>La red de estaciones de la univerdidad distrital cuenta con {{ nSensors }} sensores dedicados a realizar el registro de la temperatura relativa, al igual que la humedad relativa de cada una de las zonas de estudio</p>
+  <p>La red de estaciones de la univerdidad distrital cuenta con {{ nStations }} sensores dedicados a realizar el registro de la temperatura relativa, al igual que la humedad relativa de cada una de las zonas de estudio</p>
   <br/>
   <p>
     En pro de la educacion alternativa, buscando fomentar el desarrollo e implementacion de sistemas fisicos
@@ -15,8 +15,8 @@
 
 <script setup>
 import { ref } from "vue";
-import { sensors } from "@/data/sensors";
-const nSensors = ref(sensors.length);
+import {stations} from "@/data/stations";
+const nStations = ref(stations.length);
 </script>
 
 <style lang="scss" scoped></style>
