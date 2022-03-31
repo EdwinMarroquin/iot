@@ -12,6 +12,10 @@ const router = createRouter({
       component: () => import("../views/HomeView.vue"),
     },
     {
+      path: "/home",
+      redirect: "/",
+    },
+    {
       path: "/Sensors",
       name: "Sensors",
       component: () => import("../views/SensorsView.vue"),

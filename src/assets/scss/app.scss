@@ -32,9 +32,18 @@ body, #app {
   display:flex;
   flex-direction: column;
   flex:1;
+  overflow: hidden;
   @media screen and (min-width: 770px) {
     flex-direction: row;
   }
+}
+
+.main--wrapper main {
+    flex: 1;
+    margin: .5rem 0;
+    height: calc(100% - 3rem);
+    overflow-y: auto;
+
 }
 
 

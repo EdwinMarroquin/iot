@@ -1,8 +1,14 @@
 <template>
   <nav class="navigate">
     <ul>
+      <li v-for="route in routes">
+        <router-link :to="route">{{ route.toUpperCase() }}</router-link>
+      </li>
+<!--
       <li>
-        <router-link to="/"> <i class="fa-thin fa-home"></i>INICIO </router-link>
+        <router-link to="/">
+          <i class="fa-thin fa-home"></i>INICIO
+        </router-link>
       </li>
       <li>
         <router-link to="/collaborators">
@@ -13,15 +19,24 @@
         <router-link to="/about">
           <i class="fa-thin fa-circle-info"></i>ACERCA DE
         </router-link>
-      </li>
+      </li> -->
     </ul>
+    
   </nav>
 </template>
 
-<script setup></script>
+<script setup>
+defineProps({
+  routes: {
+    type: Object,
+    default: null,
+    required: true,
+  },
+});
+</script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/variables.scss';
+@import "@/assets/scss/variables.scss";
 .navigate {
   background: #222;
   width: 100%;
@@ -70,7 +85,7 @@
         &:hover {
           color: $color_red;
           i {
-            color:$color_yellow;
+            color: $color_yellow;
           }
         }
       }

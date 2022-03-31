@@ -10,8 +10,9 @@ void InitializeFirebase()
 
   config.api_key = DB_API_KEY;
   config.database_url = DB_HOST;
+
+  // config.signer.tokens.legacy_token = DB_API_KEY;
   config.token_status_callback = tokenStatusCallback;
-  config.signer.tokens.legacy_token = DB_API_KEY;
 
   auth.user.email = FIREBASE_EMAIL;
   auth.user.password = FIREBASE_PASS;

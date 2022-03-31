@@ -1,7 +1,7 @@
 <template>
   <HeaderPartial />
   <div class="main--wrapper">
-    <NavigateComponent />
+    <NavigateComponent :routes="listRoutes" />
     <MainPartial />
   </div>
   <FooterPartial />
@@ -13,4 +13,8 @@ import HeaderPartial from "@/partials/headerPartial.vue";
 import FooterPartial from "@/partials/footerPartial.vue";
 import MainPartial from "@/partials/mainPartial.vue";
 import "@/assets/scss/app.scss";
+
+import { ref } from "vue";
+
+const listRoutes = ref(["home", "sensors", "collaborators"]);
 </script>

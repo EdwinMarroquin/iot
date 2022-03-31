@@ -13,7 +13,7 @@
 #define DB_ID "hidrologia-u-distrital"                                       // Identificador de la base de datos
 #define DB_HOST "https://hidrologia-u-distrital-default-rtdb.firebaseio.com" // Direccion de la base datos
 #define DB_API_KEY "AIzaSyC0v-XlIcscm_BlAKdyYxHPzp5CQpmxBgw"                 // Clave de acceso a la bas de datos
-#define DB_REST_SECRET "tPtDKT4ZF0nanJ9QyJYZBRMsrnnc3P1Cj0CQPGWT"            //
+#define DB_REST_SECRET "GEADMv8rU2fK8dMlI2xAwuryJf2k4kDAJfV0SOyP"            //
 
 // ================================================================================= //
 //   Para usar la base de datos de google debe solicitar la creacion del usuario a   //
@@ -39,6 +39,3 @@
 FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
-
-
-

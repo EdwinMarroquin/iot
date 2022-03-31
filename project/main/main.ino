@@ -10,6 +10,7 @@
 // ==================== ZONA DE CONFIGURACION DE LA ESTACION
 // ==================== 1 PARA ACTIVAR SERVICIOS
 // ==================== 0 PARA DESACTIVAR SERVICIOS
+
 #define DEBUG 1
 #define OLED 1
 #define WEB_SERVER 1
