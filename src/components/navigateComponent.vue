@@ -2,16 +2,16 @@
   <nav class="navigate">
     <ul>
       <li>
-        <router-link to="/"> <i class="fad fa-home"></i>INICIO </router-link>
+        <router-link to="/"> <i class="fa-thin fa-home"></i>INICIO </router-link>
       </li>
       <li>
         <router-link to="/collaborators">
-          <i class="fad fa-user-group"></i>COLABORADORES
+          <i class="fa-thin fa-user-group"></i>COLABORADORES
         </router-link>
       </li>
       <li>
         <router-link to="/about">
-          <i class="fad fa-circle-info"></i>ACERCA DE
+          <i class="fa-thin fa-circle-info"></i>ACERCA DE
         </router-link>
       </li>
     </ul>
@@ -21,10 +21,11 @@
 <script setup></script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/variables.scss';
 .navigate {
-  background: #2d2d2d;
+  background: #222;
   width: 100%;
-  border-top: 1px solid invert(#2d2d2d);
+  border-top: 1px solid invert(#222);
   @media screen and (min-width: 768px) {
     width: 15rem;
     margin: 0.5rem;
@@ -57,6 +58,7 @@
         font-size: 1rem;
         border-radius: 0.25rem;
         flex: 1;
+        text-decoration: none;
         i {
           margin-right: 0.5rem;
           display: none;
@@ -66,7 +68,10 @@
         }
 
         &:hover {
-          background: rgba(#dc0000, 0.1);
+          color: $color_red;
+          i {
+            color:$color_yellow;
+          }
         }
       }
     }

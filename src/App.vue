@@ -1,5 +1,4 @@
 <template>
-<link rel="manifest" href="/manifest.json">
   <HeaderPartial />
   <div class="main--wrapper">
     <NavigateComponent />
@@ -13,5 +12,5 @@ import NavigateComponent from "@/components/navigateComponent.vue";
 import HeaderPartial from "@/partials/headerPartial.vue";
 import FooterPartial from "@/partials/footerPartial.vue";
 import MainPartial from "@/partials/mainPartial.vue";
-import "@/assets/scss/main.scss";
+import "@/assets/scss/app.scss";
 </script>

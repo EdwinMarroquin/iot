@@ -3,23 +3,30 @@
     <!-- <a href="https://inteud.github.io/"> -->
     <a href="/">
       <!-- <img src="../assets/logo_clean.svg" alt="inteud" /> -->
-      <logoInteud class="logo"/>
+      <logoInteud class="logo" :bg="color_red" :ud="color_yellow" inte="#fff" />
     </a>
-    <h1>Area de investigación Tecnológica de la Universidad Distrital</h1>
+    <h1>
+      Red de estaciones meteorologias <br />Universidad Distrital <br />
+      Francisco José de Caldas
+    </h1>
   </div>
 </template>
 
 <script setup>
-import logoInteud from '@/components/logoInteud.vue';
+import logoInteud from "@/components/logoInteud.vue";
+
+const color_red = "#B71C1C";
+const color_yellow = "#FBC02D";
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import "@/assets/scss/variables.scss";
 .header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: #2d2d2d;
-  color: white;
+  background: $color_red;
+  color: $color_yellow;
   padding: 1rem;
   .logo {
     width: auto;
@@ -29,7 +36,7 @@ import logoInteud from '@/components/logoInteud.vue';
     }
   }
   h1 {
-    font-size: 1.25rem;
+    font-size: 1rem;
     flex: 1;
     text-align: -webkit-right;
     font-weight: 300;
