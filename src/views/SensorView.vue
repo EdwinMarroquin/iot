@@ -1,15 +1,15 @@
 <template>
   <div class="sensor">
     <div class="left">
-      <h1>{{ info.name }}</h1>
       <GoogleMap
         api-key="AIzaSyAor4_IQ6zbgIQ44djnjKo1EdsFD8CyqfQ"
         class="map"
         :center="center"
         :zoom="18"
+        disableDefaultUi="true"
       >
         <InfoWindow :options="{ position: center }">
-          <div class="ui-mark-title">{{ info.id }}</div>
+          <div class="ui-mark-title">{{ info.name }}</div>
 
           <div class="ui-mark-content">
             <div class="ui-mark-content-title">Temperatura:</div>
@@ -29,14 +29,14 @@
         </InfoWindow>
       </GoogleMap>
       <div class="action">
-        <div class="action--title">Descargar datos:</div>
+        <div class="action--title">Descargar :</div>
         <a
           class="action--link"
           :href="'https://api.thingspeak.com/channels/' + id + '/field/1.csv'"
           :download="'temperatura' + id"
           target="_blank"
         >
-          <i style="color: seagreen" class="action--link-icon fal fa-temperature-sun"></i>
+          <i class="action--link-icon fat fa-temperature-sun"></i>
           <div class="action--link-label">Temperatura</div>
         </a>
         <a
@@ -45,7 +45,7 @@
           :download="'humedad' + id"
           target="_blank"
         >
-          <i style="color: seagreen" class="action--link-icon fal fa-hand-holding-droplet"></i>
+          <i class="action--link-icon fat fa-hand-holding-droplet"></i>
           <div class="action--link-label">Humedad</div>
         </a>
         <a
@@ -54,16 +54,16 @@
           :download="'databaseCsv' + id"
           target="_blank"
         >
-          <i style="color: seagreen" class="action--link-icon fal fa-file-csv"></i>
+          <i class="action--link-icon fat fa-file-csv"></i>
           <div class="action--link-label">CSV</div>
         </a>
         <a
           class="action--link"
-          :href="'https://api.thingspeak.com/channels/' + id + '/feeds.json'"
+          :href="'https://api.thingspeak.com/channels/' + id + '/feeds.json?results=25000'"
           :download="'databaseJson' + id"
           target="_blank"
         >
-          <i style="color: seagreen" class="action--link-icon fal fa-code"></i>
+          <i class="action--link-icon fat fa-code"></i>
           <div class="action--link-label">JSON</div>
         </a>
       </div>
@@ -75,7 +75,7 @@
             :src="
               'https://thingspeak.com/channels/' +
               id +
-              '/charts/1?dynamic=true&results=25&title=&type=spline&yaxis=Temperatura&xaxis=Fecha'
+              '/charts/1?dynamic=true&results=50&title=&type=spline&yaxis=Temperatura&xaxis=Fecha'
             "
             frameborder="0"
           ></iframe>
@@ -87,7 +87,7 @@
             :src="
               'https://thingspeak.com/channels/' +
               id +
-              '/charts/2?dynamic=true&results=25&title=&type=spline&yaxis=Humedad&xaxis=Fecha'
+              '/charts/2?dynamic=true&results=50&title=&type=spline&yaxis=Humedad&xaxis=Fecha'
             "
             frameborder="0"
           ></iframe>
@@ -135,6 +135,8 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/app.scss";
+
 .sensor {
   display: flex;
   flex: 1;
@@ -153,35 +155,49 @@ onBeforeMount(() => {
   flex: 1;
   height: 100%;
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   @media screen and (min-width: 770px) {
     margin-bottom: 0;
   }
   .map {
-    width: 100%;
-    height: calc(100% - 6rem);
+    width: calc(100% - 1rem);
+    height: 100%;
     min-height: 24rem;
+    pointer-events: none;
+    border: 1px solid $color_black;
+    border-radius: .5rem;
+    margin-left: .25rem;
+    overflow: hidden;
+    @media screen and (min-width: 770px) {
+      width: 100%;
+    }
   }
   .action {
     margin-top: 1rem;
     display: flex;
+    flex-flow: row wrap;
     align-items: center;
+    justify-content: flex-start;
     &--title {
-      margin-right: 1rem;
+      margin-right: 0.5rem;
     }
     &--link {
       display: flex;
       flex-direction: row;
       text-decoration: none;
-      justify-content: center;
-      align-items: center;
       text-transform: uppercase;
-      margin-right: 0.5rem;
-      padding: 0.5rem 0.75rem;
+      padding: 0.325rem 0.75rem;
       background: #333;
-      height: 100%;
-      color: #fff;
-      border-radius: 0.5rem;
+      border-radius: 0.25rem;
+      margin: 0.125rem;
+      &-icon {
+        color: $color_yellow;
+      }
       &-label {
+        color: $color_red;
         margin-left: 0.5rem;
         font-size: 0.75rem;
         display: flex;

@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500;700&display=swap');
 @import url('https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css');
 
+@import 'variables.scss';
+
 * {
   margin: 0;
   padding: 0;
+  transition: all .2s ease-in-out;
   &:after, &:before {
     @extend *
   }
@@ -49,25 +52,27 @@ body, #app {
 .ui-mark {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   min-width: 6rem;
   margin: 0.5rem;
   padding: 1rem;
   background: whitesmoke;
+  border: 1px solid silver;
   text-decoration: none;
-  color: #333;
+  color: $color_black;
   border-radius: 0.5rem;
 }
 
 .ui-mark-title {
+  max-width: 10rem;
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
   border-bottom: 1px solid;
   padding-bottom: 0.125rem;
-}
-
-.ui-mark-content {
-  margin-bottom: 0.25rem;
+  word-wrap: break-word;
+  font-size: .75rem;
+  flex:1;
 }
 
 .ui-mark-content-title {
@@ -77,10 +82,110 @@ body, #app {
 .ui-mark-content-info {
   font-weight: bold;
   font-size: 1.25rem;
+  color: $color_red;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  height: 2rem;
 }
 
 .ui-mark-content-info-icon {
   margin-right: 0.25rem;
+  color: $color_yellow;
 }
 
 
+.sensor-active {
+  background: $color_red;
+  border: 1px solid $color_red;
+  .ui-mark-title,
+  .ui-mark-content,
+  .ui-mark-content-title,
+  .ui-mark-content-info,
+  .ui-mark-content-info-icon {
+    color: $color_yellow;
+  }
+}
+
+
+.footer {
+  background: $color_black;
+  color: $color_white;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.75rem;
+  font-weight: 100;
+  p {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    a {
+      text-decoration: none;
+      color: $color_yellow;
+      i {
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+
+.navigate {
+  background: $color_black;
+  width: 100%;
+  border-top: 1px solid invert($color_black);
+  @media screen and (min-width: 768px) {
+    width: 15rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    @media screen and (min-width: 768px) {
+      flex-direction: column;
+    }
+    li {
+      line-height: 100%;
+      margin: 0.25rem;
+      display: flex;
+      flex: 1;
+      text-align: center;
+      @media screen and (min-width: 768px) {
+        // margin: 1rem 1rem 0 1rem;
+        text-align: left;
+      }
+
+      a {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        color: $color_white;
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        flex: 1;
+        text-decoration: none;
+        i {
+          margin-right: 0.5rem;
+          display: none;
+          @media screen and (min-width: 768px) {
+            display: inline;
+          }
+        }
+
+        &:hover {
+          color: $color_red;
+          i {
+            color: $color_yellow;
+          }
+        }
+      }
+    }
+  }
+}

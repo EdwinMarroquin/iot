@@ -2,16 +2,38 @@
   <GoogleMap
     api-key="AIzaSyAor4_IQ6zbgIQ44djnjKo1EdsFD8CyqfQ"
     style="width: 100%; height: 100%"
+    :styles="[2]"
     :zoom="11"
     :center="center"
+    titl="1"
   >
-    <Marker v-for="(s, k) in options" :key="k" :options="s"></Marker>
+    <Marker v-for="(s, k) in dataStations" :key="k" :options="s.options">
+      <InfoWindow>
+        <div class="ui-mark-title">{{ s.info.id }}</div>
+
+        <div class="ui-mark-content">
+          <div class="ui-mark-content-title">Temperatura:</div>
+          <div class="ui-mark-content-info">
+            <div class="ui-mark-content-info-icon fal fa-temperature-sun"></div>
+            {{ parseFloat(s.info.t).toFixed(2) }} &#176;C
+          </div>
+        </div>
+
+        <div class="ui-mark-content">
+          <div class="ui-mark-content-title">Humedad:</div>
+          <div class="ui-mark-content-info">
+            <div class="ui-mark-content-info-icon fal fa-hand-holding-water"></div>
+            {{ parseFloat(s.info.h).toFixed(2) }} %
+          </div>
+        </div>
+      </InfoWindow>
+    </Marker>
   </GoogleMap>
 </template>
 
 <script setup>
 import { onBeforeMount, ref } from "vue";
-import { GoogleMap, Marker } from "vue3-google-map";
+import { GoogleMap, Marker, InfoWindow } from "vue3-google-map";
 
 import { stations } from "@/data/stations.js";
 
@@ -19,7 +41,7 @@ const listStations = ref(stations);
 
 const center = ref({});
 const fullData = ref([]);
-const options = ref([]);
+const dataStations = ref([]);
 
 const getData = async () => {
   listStations.value.map(async (station) => {
@@ -29,12 +51,19 @@ const getData = async () => {
     const d = await data.json();
     await fullData.value.push(d);
     // console.log(d)
-    options.value.push({
-      position: {
-        lat: parseFloat(d.channel.latitude),
-        lng: parseFloat(d.channel.longitude),
+    dataStations.value.push({
+      info: {
+        id: d.channel.name,
+        t: parseFloat(d.feeds[d.feeds.length - 1].field1),
+        h: parseFloat(d.feeds[d.feeds.length - 1].field2),
       },
-      title: d.channel.id.toString(),
+      options: {
+        position: {
+          lat: parseFloat(d.channel.latitude),
+          lng: parseFloat(d.channel.longitude),
+        },
+        title: d.channel.id.toString(),
+      },
     });
   });
 };

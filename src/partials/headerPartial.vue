@@ -3,10 +3,15 @@
     <!-- <a href="https://inteud.github.io/"> -->
     <a href="/">
       <!-- <img src="../assets/logo_clean.svg" alt="inteud" /> -->
-      <logoInteud class="logo" :bg="color_red" :ud="color_yellow" inte="#fff" />
+      <logoInteud
+        class="logo"
+        :bg="color_red"
+        :ud="color_yellow"
+        :inte="color_white"
+      />
     </a>
     <h1>
-      Red de estaciones meteorologias <br />Universidad Distrital <br />
+      Red de estaciones meteorológicas <br />Universidad Distrital <br />
       Francisco José de Caldas
     </h1>
   </div>
@@ -15,8 +20,9 @@
 <script setup>
 import logoInteud from "@/components/logoInteud.vue";
 
-const color_red = "#B71C1C";
 const color_yellow = "#FBC02D";
+const color_red = "#B71C1C";
+const color_white = "#FAFAFA";
 </script>
 
 <style lang="scss">
@@ -41,10 +47,10 @@ const color_yellow = "#FBC02D";
     text-align: -webkit-right;
     font-weight: 300;
     @media screen and (min-width: 520px) {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
-    @media screen and (min-width: 768) {
-      font-size: 2rem;
+    @media screen and (min-width: 770px) {
+      font-size: 1.35rem;
     }
   }
 }
