@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="sensors">
     <CardSensor
       v-for="(station, key) in listStations"
       :key="key"
@@ -11,16 +11,15 @@
 <script setup>
 import { ref } from "vue";
 import {stations} from "@/data/stations.js";
-// import NavigateComponent from "../components/navigateComponent.vue";
 import CardSensor from "../components/cardSensor.vue";
 
 const listStations = ref(stations);
 </script>
 
 <style lang="scss" scoped>
-.about {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+.sensors {
+display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) ) ;
 }
 </style>

@@ -46,4 +46,41 @@ body, #app {
 
 }
 
+.ui-mark {
+  display: flex;
+  flex-direction: column;
+  min-width: 6rem;
+  margin: 0.5rem;
+  padding: 1rem;
+  background: whitesmoke;
+  text-decoration: none;
+  color: #333;
+  border-radius: 0.5rem;
+}
+
+.ui-mark-title {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid;
+  padding-bottom: 0.125rem;
+}
+
+.ui-mark-content {
+  margin-bottom: 0.25rem;
+}
+
+.ui-mark-content-title {
+  font-size: 0.7rem;
+}
+
+.ui-mark-content-info {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.ui-mark-content-info-icon {
+  margin-right: 0.25rem;
+}
+
 

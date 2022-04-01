@@ -19,6 +19,6 @@ import { ref } from "vue";
 const listRoutes = ref([
   { label: "home", icon: "home" },
   { label: "sensors", icon: "sensor-cloud" },
-  { label: "collaborators", icon: "users" },
+  { label: "map", icon: "map" },
 ]);
 </script>
