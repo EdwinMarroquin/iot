@@ -5,8 +5,4 @@
 </template>
 
 <script setup></script>
-<style lang="scss" scoped>
-.main {
-  // padding: 1rem;
-}
-</style>
+<style lang="scss" scoped></style>

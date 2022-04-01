@@ -60,8 +60,8 @@ defineProps({
     position: absolute;
     left: -1rem;
     transform: rotate(-15deg);
-    color:rgba(white, 0.25);
-    transition: all linear .2s;
+    color: rgba(white, 0.25);
+    transition: all linear 0.2s;
   }
   &-title {
     text-transform: capitalize;

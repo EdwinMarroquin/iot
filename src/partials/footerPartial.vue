@@ -19,7 +19,7 @@ const year = ref(new Date().getFullYear());
   color: white;
   padding: 1rem;
   text-align: center;
-  display:flex;
+  display: flex;
   justify-content: space-around;
   p:first-child {
     color: white;

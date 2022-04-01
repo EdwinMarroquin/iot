@@ -73,7 +73,9 @@
         <div class="chart">
           <iframe
             :src="
-              'https://thingspeak.com/channels/' + id + '/charts/1?dynamic=true&results=25&title=&type=spline&yaxis=Temperatura&xaxis=Fecha'
+              'https://thingspeak.com/channels/' +
+              id +
+              '/charts/1?dynamic=true&results=25&title=&type=spline&yaxis=Temperatura&xaxis=Fecha'
             "
             frameborder="0"
           ></iframe>
@@ -82,7 +84,10 @@
       <div class="humedad">
         <div class="chart">
           <iframe
-            :src="'https://thingspeak.com/channels/' + id + '/charts/2?dynamic=true&results=25&title=&type=spline&yaxis=Humedad&xaxis=Fecha'
+            :src="
+              'https://thingspeak.com/channels/' +
+              id +
+              '/charts/2?dynamic=true&results=25&title=&type=spline&yaxis=Humedad&xaxis=Fecha'
             "
             frameborder="0"
           ></iframe>
@@ -93,8 +98,8 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, reactive } from "vue";
-import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map'
+import { ref, onBeforeMount } from "vue";
+import { GoogleMap, InfoWindow } from "vue3-google-map";
 
 const props = defineProps({
   id: {
@@ -116,7 +121,10 @@ const getData = async () => {
   feeds.value = d.feeds;
   info.value = d.channel;
   curr.value = feeds.value[feeds.value.length - 1];
-  center.value = { lat: parseFloat(info.value.latitude), lng: parseFloat(info.value.longitude) }
+  center.value = {
+    lat: parseFloat(info.value.latitude),
+    lng: parseFloat(info.value.longitude),
+  };
 };
 
 onBeforeMount(() => {
@@ -124,7 +132,6 @@ onBeforeMount(() => {
     getData();
   }, 1000);
 });
-
 </script>
 
 <style lang="scss" scoped>
@@ -188,14 +195,14 @@ onBeforeMount(() => {
   flex-direction: column;
   .humedad,
   .temperatura {
-    displaY:flex;
-  flex: 1;
+    display: flex;
+    flex: 1;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     .chart {
       flex: 1;
       height: 100%;
-      display:flex;
+      display: flex;
       iframe {
         margin: auto;
         width: 30rem;

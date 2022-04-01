@@ -1,30 +1,13 @@
 <template>
   <nav class="navigate">
     <ul>
-      <li v-for="route in routes">
-        <router-link :to="'/'+route.label">
-          <i :class="['fad', `fa-${route.icon}`]"></i>
-          {{ route.label.toUpperCase() }}
+      <li v-for="(r, k) in routes" :key="k">
+        <router-link :to="'/' + r.label">
+          <i :class="['fad', `fa-${r.icon}`]"></i>
+          {{ r.label.toUpperCase() }}
         </router-link>
       </li>
-<!--
-      <li>
-        <router-link to="/">
-          <i class="fa-thin fa-home"></i>INICIO
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/collaborators">
-          <i class="fa-thin fa-user-group"></i>COLABORADORES
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/about">
-          <i class="fa-thin fa-circle-info"></i>ACERCA DE
-        </router-link>
-      </li> -->
     </ul>
-
   </nav>
 </template>
 

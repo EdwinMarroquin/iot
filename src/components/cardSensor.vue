@@ -1,5 +1,9 @@
 <template>
-  <router-link class="ui-mark" :to="'/sensor/' + id" :style="'background:'+ bgColor + ';color:' + txColor">
+  <router-link
+    class="ui-mark"
+    :to="'/sensor/' + id"
+    :style="'background:' + bgColor + ';color:' + txColor"
+  >
     <div class="ui-mark-title">{{ info.id }}</div>
 
     <div class="ui-mark-content">
@@ -38,22 +42,21 @@ const bgColor = ref();
 const txColor = ref();
 
 const getData = async () => {
-
   const data = await fetch(
     `https://api.thingspeak.com/channels/${props.id}/feeds.json`
-  )
+  );
   const d = await data.json();
   feeds.value = d.feeds;
   info.value = d.channel;
-  curr.value = feeds.value[feeds.value.length - 1]
+  curr.value = feeds.value[feeds.value.length - 1];
 
-  if(prev.value.created_at !== curr.value.created_at) {
+  if (prev.value.created_at !== curr.value.created_at) {
     prev.value = curr.value;
-    bgColor.value ='green'
-    txColor.value ='white'
+    bgColor.value = "green";
+    txColor.value = "white";
   } else {
-    bgColor.value ='whitesmoke'
-    txColor.value ='#333'
+    bgColor.value = "whitesmoke";
+    txColor.value = "#333";
   }
 };
 
@@ -61,10 +64,7 @@ onBeforeMount(() => {
   setInterval(() => {
     getData();
   }, 2000);
-
-})
+});
 </script>
 
-<style>
-
-</style>
+<style></style>
