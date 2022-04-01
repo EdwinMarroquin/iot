@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/iot/" : "/",
   pwa: {
     // ...Other pwa config options
     themeColor: "#4DBA87",
