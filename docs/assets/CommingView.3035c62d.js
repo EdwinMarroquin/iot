@@ -1,1 +1,0 @@
-import{_ as e,o as _,c}from"./index.1c201f23.js";const n={};function o(r,t){return _(),c("h1",null,"En construcci\xF3n")}var s=e(n,[["render",o],["__scopeId","data-v-f0e80cb0"]]);export{s as default};
