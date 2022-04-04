@@ -13,12 +13,8 @@ import { useAppState } from "../stores/appState";
 
 const listStations = ref(stations);
 
-onBeforeMount(async () => {
-  await useAppState().setLoad(false);
-})
-
 onMounted(async () => {
-  console.log(await useAppState().getLoad)
+  // await useAppState().setLoad(false);
 })
 
 </script>
@@ -27,6 +23,6 @@ onMounted(async () => {
 .sensors {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
 }
 </style>

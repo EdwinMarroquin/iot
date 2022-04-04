@@ -1,0 +1,107 @@
+.gm-style {
+  .gm-style-iw-c {
+  }
+  .gm-style-iw-c,
+  .gm-style-iw-d {
+    background: whitesmoke !important;
+    min-width: 10rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+    padding-top: 0.5rem !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    button[aria-label="Cerrar"] {
+      background: none !important;
+      margin: 0 !important;
+      top: 0 !important;
+      right: 0 !important;
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+      padding: 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      span {
+        margin: 0 !important;
+      }
+    }
+  }
+  .gm-style-iw-t::after {
+    background: linear-gradient(
+      45deg,
+      whitesmoke 50%,
+      transparent 50%
+    ) !important;
+  }
+
+  .card-sensor {
+    border: none !important;
+  }
+}
+.card-sensor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 0.5rem;
+  padding: 1rem;
+  background: whitesmoke;
+  border: 1px solid silver;
+  text-decoration: none;
+  color: $color_black;
+  border-radius: 0.5rem;
+  min-width: 7rem;
+  &-title {
+    max-width: 10rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid;
+    padding-bottom: 0.125rem;
+    word-wrap: break-word;
+    font-size: 0.75rem;
+    flex: 1;
+  }
+  &-content {
+    font-size: 1.25rem;
+    &-title {
+      font-size: 0.7rem;
+    }
+    &-info {
+      font-weight: bold;
+      color: $color_red;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 2rem;
+      &-icon {
+        margin-right: 0.25rem;
+        color: $color_yellow;
+      }
+    }
+
+    &.datetime {
+      font-size: 0.75rem;
+      flex-direction: column;
+      display: flex;
+      margin: 0;
+      justify-content: space-between;
+      .card-sensor-content-info {
+        height: 1rem;
+      }
+    }
+  }
+}
+
+.sensor-active {
+  background: $color_red;
+  border: 1px solid $color_red;
+  .card-sensor-title,
+  .card-sensor-content,
+  .card-sensor-content-title,
+  .card-sensor-content-info,
+  .card-sensor-content-info-icon {
+    color: $color_yellow;
+  }
+}

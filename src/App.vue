@@ -20,5 +20,6 @@ const listRoutes = ref([
   { label: "home", icon: "home" },
   { label: "sensors", icon: "sensor-cloud" },
   { label: "map", icon: "map" },
+  { label: "geomap", icon: "draw-polygon" },
 ]);
 </script>

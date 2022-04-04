@@ -5,41 +5,28 @@
     :styles="[2]"
     :zoom="11"
     :center="center"
-    titl="1"
   >
     <Marker v-for="(s, k) in dataStations" :key="k" :options="s.options">
       <InfoWindow>
-        <div class="ui-mark-title">{{ s.info.name }}</div>
-
-        <div class="ui-mark-content">
-          <div class="ui-mark-content-title">Temperatura:</div>
-          <div class="ui-mark-content-info">
-            <div class="ui-mark-content-info-icon fal fa-temperature-sun"></div>
-            {{ parseFloat(s.info.t).toFixed(2) }} &#176;C
-          </div>
-        </div>
-
-        <div class="ui-mark-content">
-          <div class="ui-mark-content-title">Humedad:</div>
-          <div class="ui-mark-content-info">
-            <div class="ui-mark-content-info-icon fal fa-hand-holding-water"></div>
-            {{ parseFloat(s.info.h).toFixed(2) }} %
-          </div>
-        </div>
+        <CardSensor :id="s.info.id" />
       </InfoWindow>
     </Marker>
   </GoogleMap>
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref , reactive} from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { GoogleMap, Marker, InfoWindow } from "vue3-google-map";
+import CardSensor from "../components/cardSensor.vue";
 
 import { stations } from "@/data/stations.js";
 
 const listStations = ref(stations);
 
-const center = ref({});
+const center = ref({
+  lat: parseFloat(4.6456398),
+  lng: parseFloat(-74.1788349),
+});
 const fullData = ref([]);
 const dataStations = reactive([]);
 
@@ -52,6 +39,7 @@ const getStations = async () => {
     await fullData.value.push(d);
     dataStations.push({
       info: {
+        id: d.channel.id,
         name: d.channel.name,
         t: parseFloat(d.feeds[d.feeds.length - 1].field1),
         h: parseFloat(d.feeds[d.feeds.length - 1].field2),
@@ -65,7 +53,7 @@ const getStations = async () => {
       },
     });
   });
-}
+};
 
 const getData = async () => {
   listStations.value.map(async (station) => {
@@ -74,19 +62,19 @@ const getData = async () => {
     );
     const d = await data.json();
     fullData.value.forEach((s, i) => {
-      if(s.channel.id === d.channel.id) {
-        dataStations[i].info.t = parseFloat(d.feeds[0].field1)
-        dataStations[i].info.h = parseFloat(d.feeds[0].field2)
+      if (s.channel.id === d.channel.id) {
+        dataStations[i].info.t = parseFloat(d.feeds[0].field1);
+        dataStations[i].info.h = parseFloat(d.feeds[0].field2);
       }
-    })
+    });
   });
 };
 
-onBeforeMount(async() => {
+onMounted(async () => {
   await getStations();
-  setInterval(() => { getData() }, 1000)
-  // getData();
-  center.value = { lat: 4.6456398, lng: -74.1788349 };
+  setInterval(() => {
+    getData();
+  }, 1000);
 });
 </script>
 

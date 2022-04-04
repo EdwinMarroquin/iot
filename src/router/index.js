@@ -43,6 +43,11 @@ const router = createRouter({
       component: () => import("../views/MapView.vue"),
     },
     {
+      path: "/geomap",
+      name: "geomap",
+      component: () => import("../views/GeoMapView.vue"),
+    },
+    {
       path: "/comming",
       name: "comming",
       component: () => import("../views/CommingView.vue"),

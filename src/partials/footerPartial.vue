@@ -1,6 +1,5 @@
 <template>
   <footer class="footer">
-    <p></p>
     <p>
       Creado y mantenido por
       <br />

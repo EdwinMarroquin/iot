@@ -8,24 +8,8 @@
         :zoom="18"
         disableDefaultUi="true"
       >
-        <InfoWindow :options="{ position: center }">
-          <div class="ui-mark-title">{{ info.name }}</div>
-
-          <div class="ui-mark-content">
-            <div class="ui-mark-content-title">Temperatura:</div>
-            <div class="ui-mark-content-info">
-              <div class="ui-mark-content-info-icon fal fa-temperature-sun"></div>
-              {{ parseFloat(curr.field1).toFixed(2) }} &#176;C
-            </div>
-          </div>
-
-          <div class="ui-mark-content">
-            <div class="ui-mark-content-title">Humedad:</div>
-            <div class="ui-mark-content-info">
-              <div class="ui-mark-content-info-icon fal fa-hand-holding-water"></div>
-              {{ parseFloat(curr.field2).toFixed(2) }} %
-            </div>
-          </div>
+        <InfoWindow :options="{ position: center }" >
+          <CardSensor :id="props.id" />
         </InfoWindow>
       </GoogleMap>
       <div class="action">
@@ -36,7 +20,7 @@
           :download="'temperatura' + id"
           target="_blank"
         >
-          <i class="action--link-icon fat fa-temperature-sun"></i>
+          <i class="action--link-icon fad fa-temperature-sun"></i>
           <div class="action--link-label">Temperatura</div>
         </a>
         <a
@@ -45,7 +29,7 @@
           :download="'humedad' + id"
           target="_blank"
         >
-          <i class="action--link-icon fat fa-hand-holding-droplet"></i>
+          <i class="action--link-icon fad fa-hand-holding-droplet"></i>
           <div class="action--link-label">Humedad</div>
         </a>
         <a
@@ -54,23 +38,27 @@
           :download="'databaseCsv' + id"
           target="_blank"
         >
-          <i class="action--link-icon fat fa-file-csv"></i>
+          <i class="action--link-icon fad fa-file-csv"></i>
           <div class="action--link-label">CSV</div>
         </a>
         <a
           class="action--link"
-          :href="'https://api.thingspeak.com/channels/' + id + '/feeds.json?results=25000'"
+          :href="
+            'https://api.thingspeak.com/channels/' +
+            id +
+            '/feeds.json?results=25000'
+          "
           :download="'databaseJson' + id"
           target="_blank"
         >
-          <i class="action--link-icon fat fa-code"></i>
+          <i class="action--link-icon fad fa-code"></i>
           <div class="action--link-label">JSON</div>
         </a>
       </div>
     </div>
     <div class="right">
       <div class="temperatura">
-        <div class="chart">
+        <!-- <div class="chart">
           <iframe
             :src="
               'https://thingspeak.com/channels/' +
@@ -79,7 +67,8 @@
             "
             frameborder="0"
           ></iframe>
-        </div>
+        </div>-->
+        <HChart :options="chartOptions" />
       </div>
       <div class="humedad">
         <div class="chart">
@@ -98,8 +87,10 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, computed } from "vue";
 import { GoogleMap, InfoWindow } from "vue3-google-map";
+import CardSensor from "../components/cardSensor.vue";
+import HChart from "../components/highChart.vue";
 
 const props = defineProps({
   id: {
@@ -127,6 +118,36 @@ const getData = async () => {
   };
 };
 
+
+const chartOptions = ref({
+  chart: {
+    type: 'column'
+  },
+  title: {
+    text: 'Fruit Consumption'
+  },
+  xAxis: {
+    title: {
+      text: 'Fruit Number'
+    },
+    tickInterval: 10
+  },
+  yAxis: {
+    title: {
+      text: 'Fruit eaten'
+    },
+    tickInterval: 1
+  },
+  series: [{
+    name: 'Jane',
+    data: [1, 0, 4]
+  }, {
+    name: 'John',
+    data: [5, 7, 3]
+  }],
+  responsive: true
+});
+
 onBeforeMount(() => {
   setInterval(() => {
     getData();
@@ -142,6 +163,8 @@ onBeforeMount(() => {
   flex: 1;
   height: 100%;
   flex-direction: column;
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
   @media screen and (min-width: 770px) {
     flex-direction: row;
   }
@@ -150,12 +173,13 @@ onBeforeMount(() => {
 .right {
   height: 100%;
   margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex:1;
 }
 .left {
-  flex: 1;
   height: 100%;
   margin-bottom: 2rem;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -164,12 +188,13 @@ onBeforeMount(() => {
   }
   .map {
     width: calc(100% - 1rem);
+    // min-width: 18rem;
     height: 100%;
     min-height: 24rem;
-    pointer-events: none;
+    // pointer-events: none;
     border: 1px solid $color_black;
-    border-radius: .5rem;
-    margin-left: .25rem;
+    border-radius: 0.5rem;
+    margin-left: 0.25rem;
     overflow: hidden;
     @media screen and (min-width: 770px) {
       width: 100%;
@@ -207,8 +232,6 @@ onBeforeMount(() => {
   }
 }
 .right {
-  display: flex;
-  flex-direction: column;
   .humedad,
   .temperatura {
     display: flex;
@@ -218,10 +241,9 @@ onBeforeMount(() => {
     .chart {
       flex: 1;
       height: 100%;
-      display: flex;
       iframe {
         margin: auto;
-        width: 30rem;
+        width: 100%;
         height: 15rem;
       }
     }

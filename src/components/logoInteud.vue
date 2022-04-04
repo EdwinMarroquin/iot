@@ -7,7 +7,14 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <g id="inteud">
-      <rect id="bg" x="2.1362e-6" y="-1.2207e-6" width="161.91" height="84.667" :fill="bg" />
+      <rect
+        id="bg"
+        x="2.1362e-6"
+        y="-1.2207e-6"
+        width="161.91"
+        height="84.667"
+        :fill="bg"
+      />
       <g id="inte" transform="translate(-108.51,-186.28)" :fill="inte">
         <path
           id="i"
@@ -48,7 +55,6 @@
 </template>
 
 <script setup>
-
 defineProps({
   bg: {
     type: String,
