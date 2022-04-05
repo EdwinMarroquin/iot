@@ -17,9 +17,9 @@ import MainPartial from "@/partials/mainPartial.vue";
 import { ref } from "vue";
 
 const listRoutes = ref([
-  { label: "home", icon: "home" },
-  { label: "sensors", icon: "sensor-cloud" },
-  { label: "map", icon: "map" },
-  { label: "geomap", icon: "draw-polygon" },
+  { label: "home", path: "/", icon: "home" },
+  { label: "sensors", path: "/sensors", icon: "sensor-cloud" },
+  { label: "map", path: "/map", icon: "map" },
+  { label: "geomap", path: "/geomap", icon: "draw-polygon" },
 ]);
 </script>

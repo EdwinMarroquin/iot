@@ -3,12 +3,12 @@
     api-key="AIzaSyAor4_IQ6zbgIQ44djnjKo1EdsFD8CyqfQ"
     style="width: 100%; height: 100%"
     :styles="[2]"
-    :zoom="11.61"
+    :zoom="11.01"
     :center="center"
   >
     <Marker v-for="(s, k) in dataStations" :key="k" :options="s.options">
       <InfoWindow>
-        <CardSensor :id="s.info.id" />
+        <CardSensor :sensorId="s.info.id" />
       </InfoWindow>
     </Marker>
   </GoogleMap>

@@ -37,7 +37,7 @@
     <router-link
       v-else
       class="card-sensor"
-      :to="'/sensor/' + id"
+      :to="'/sensor/' + sensorId"
       :class="[active ? 'sensor-active' : '']"
     >
       <div class="card-sensor-title">{{ info.name }}</div>
@@ -79,7 +79,7 @@ import { ref, onMounted } from "vue";
 import { useAppState } from "@/stores/appState";
 
 const props = defineProps({
-  id: {
+  sensorId: {
     type: Number,
     required: true,
   },
@@ -101,7 +101,7 @@ const rendered = ref(false);
 
 const getData = async () => {
   const data = await fetch(
-    `https://api.thingspeak.com/channels/${props.id}/feeds.json`
+    `https://api.thingspeak.com/channels/${props.sensorId}/feeds.json`
   );
   const d = await data.json();
   feeds.value = d.feeds;

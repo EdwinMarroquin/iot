@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="loading" v-if="useAppState().getLoad !== true">Loading</div> -->
   <div class="sensors">
-    <CardSensor v-for="(station, key) in listStations" :key="key" :id="station.id" />
+    <CardSensor v-for="(station, key) in listStations" :key="key" :sensorId="station.id" />
   </div>
 </template>
 

@@ -1,4 +1,3 @@
-
 .navigate {
   background: $color_black;
   // width: 100%;
@@ -15,7 +14,6 @@
     flex-direction: column;
     li {
       line-height: 100%;
-      margin: 0.25rem;
       display: flex;
       flex: 1;
       justify-content: space-between;
@@ -23,36 +21,42 @@
         // margin: 1rem 1rem 0 1rem;
         text-align: left;
       }
+      .link--active {
+        color: $color_red;
+        i {
+          color: $color_yellow;
+        }
+      }
 
       a {
         width: 100%;
-        padding: 0.75rem 1rem;
         color: $color_white;
         font-size: 1rem;
         border-radius: 0.25rem;
         flex: 1;
         text-decoration: none;
-        display:flex;
-        flex-direction:row;
+        display: flex;
+        flex-direction: row;
         .menu-label {
           width: 0;
-          margin:0;
+          margin: 0;
           overflow: hidden;
+          display: flex;
+          align-items: center;
           &.active {
-            margin-left: 1rem;
             width: 10rem;
           }
         }
         i {
+          width: 3rem;
+          height: 3rem;
           display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
-
         &:hover {
-          color: $color_red;
-          i {
-            color: $color_yellow;
-          }
+          @extend .link--active;
         }
       }
     }

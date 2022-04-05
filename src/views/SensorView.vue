@@ -9,15 +9,15 @@
         disableDefaultUi="true"
       >
         <InfoWindow :options="{ position: center }">
-          <CardSensor :id="props.id" />
+          <CardSensor :sensorId="props.sensorId" />
         </InfoWindow>
       </GoogleMap>
       <div class="sensor-left-actions">
         <div class="action--title">Descargar :</div>
         <a
           class="action--link"
-          :href="'https://api.thingspeak.com/channels/' + id + '/field/1.csv'"
-          :download="'temperatura' + id"
+          :href="'https://api.thingspeak.com/channels/' + sensorId + '/field/1.csv'"
+          :download="'temperatura' + sensorId"
           target="_blank"
         >
           <i class="action--link-icon fad fa-temperature-sun"></i>
@@ -25,8 +25,8 @@
         </a>
         <a
           class="action--link"
-          :href="'https://api.thingspeak.com/channels/' + id + '/field/2.csv'"
-          :download="'humedad' + id"
+          :href="'https://api.thingspeak.com/channels/' + sensorId + '/field/2.csv'"
+          :download="'humedad' + sensorId"
           target="_blank"
         >
           <i class="action--link-icon fad fa-hand-holding-droplet"></i>
@@ -34,8 +34,8 @@
         </a>
         <a
           class="action--link"
-          :href="'https://api.thingspeak.com/channels/' + id + '/feeds.csv'"
-          :download="'databaseCsv' + id"
+          :href="'https://api.thingspeak.com/channels/' + sensorId + '/feeds.csv'"
+          :download="'databaseCsv' + sensorId"
           target="_blank"
         >
           <i class="action--link-icon fad fa-file-csv"></i>
@@ -48,7 +48,7 @@
             id +
             '/feeds.json?results=25000'
           "
-          :download="'databaseJson' + id"
+          :download="'databaseJson' + sensorId"
           target="_blank"
         >
           <i class="action--link-icon fad fa-code"></i>
@@ -93,7 +93,7 @@ import CardSensor from "../components/cardSensor.vue";
 import HChart from "../components/highChart.vue";
 
 const props = defineProps({
-  id: {
+  sensorId: {
     type: String,
     required: true,
   },
@@ -106,7 +106,7 @@ const center = ref({});
 
 const getData = async () => {
   const data = await fetch(
-    `https://api.thingspeak.com/channels/${props.id}/feeds.json`
+    `https://api.thingspeak.com/channels/${props.sensorId}/feeds.json`
   );
   const d = await data.json();
   feeds.value = d.feeds;
