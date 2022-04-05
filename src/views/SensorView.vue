@@ -1,18 +1,18 @@
 <template>
   <div class="sensor">
-    <div class="left">
+    <div class="sensor-left">
       <GoogleMap
         api-key="AIzaSyAor4_IQ6zbgIQ44djnjKo1EdsFD8CyqfQ"
-        class="map"
+        class="sensor-left-map"
         :center="center"
         :zoom="18"
         disableDefaultUi="true"
       >
-        <InfoWindow :options="{ position: center }" >
+        <InfoWindow :options="{ position: center }">
           <CardSensor :id="props.id" />
         </InfoWindow>
       </GoogleMap>
-      <div class="action">
+      <div class="sensor-left-actions">
         <div class="action--title">Descargar :</div>
         <a
           class="action--link"
@@ -56,8 +56,8 @@
         </a>
       </div>
     </div>
-    <div class="right">
-      <div class="temperatura">
+    <div class="sensor-right">
+      <div class="temperature">
         <!-- <div class="chart">
           <iframe
             :src="
@@ -70,7 +70,7 @@
         </div>-->
         <HChart :options="chartOptions" />
       </div>
-      <div class="humedad">
+      <div class="humidity">
         <div class="chart">
           <iframe
             :src="
@@ -87,7 +87,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, computed } from "vue";
+import { ref, onBeforeMount, computed, watch } from "vue";
 import { GoogleMap, InfoWindow } from "vue3-google-map";
 import CardSensor from "../components/cardSensor.vue";
 import HChart from "../components/highChart.vue";
@@ -148,6 +148,7 @@ const chartOptions = ref({
   responsive: true
 });
 
+
 onBeforeMount(() => {
   setInterval(() => {
     getData();
@@ -160,80 +161,80 @@ onBeforeMount(() => {
 
 .sensor {
   display: flex;
+  flex-direction: column;
   flex: 1;
   height: 100%;
-  flex-direction: column;
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
   @media screen and (min-width: 770px) {
     flex-direction: row;
   }
-}
-.left,
-.right {
-  height: 100%;
-  margin-right: 1rem;
-  display: flex;
-  flex-direction: column;
-  flex:1;
-}
-.left {
-  height: 100%;
-  margin-bottom: 2rem;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  @media screen and (min-width: 770px) {
-    margin-bottom: 0;
-  }
-  .map {
-    width: calc(100% - 1rem);
-    // min-width: 18rem;
+  &-left,
+  &-right {
     height: 100%;
-    min-height: 24rem;
-    // pointer-events: none;
-    border: 1px solid $color_black;
-    border-radius: 0.5rem;
-    margin-left: 0.25rem;
-    overflow: hidden;
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
     @media screen and (min-width: 770px) {
-      width: 100%;
+      width: 50%;
     }
   }
-  .action {
-    margin-top: 1rem;
-    display: flex;
-    flex-flow: row wrap;
+  &-left {
+    height: 100%;
+    margin-bottom: 2rem;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-start;
-    &--title {
-      margin-right: 0.5rem;
+    @media screen and (min-width: 770px) {
+      margin-bottom: 0;
     }
-    &--link {
-      display: flex;
-      flex-direction: row;
-      text-decoration: none;
-      text-transform: uppercase;
-      padding: 0.325rem 0.75rem;
-      background: #333;
-      border-radius: 0.25rem;
-      margin: 0.125rem;
-      &-icon {
-        color: $color_yellow;
+    &-map {
+      width: calc(100% - 0rem);
+      height: 100%;
+      min-height: 20rem;
+      @media screen and (min-width: 770px) {
+        width: 100%;
       }
-      &-label {
-        color: $color_red;
-        margin-left: 0.5rem;
-        font-size: 0.75rem;
-        display: flex;
-        align-items: center;
+    }
+    &-actions{
+      margin-top: 1rem;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: flex-start;
+      width:100%;
+      .action {
+        &--title {
+          margin-right: 0.5rem;
+        }
+        &--link {
+          display: flex;
+          flex-direction: row;
+          text-decoration: none;
+          text-transform: uppercase;
+          padding: 0.325rem 0.75rem;
+          background: #333;
+          border-radius: 0.25rem;
+          margin: 0.125rem;
+          &-icon {
+            color: $color_yellow;
+          }
+          &-label {
+            color: $color_red;
+            margin-left: 0.5rem;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+          }
+        }
       }
     }
   }
 }
-.right {
-  .humedad,
-  .temperatura {
+
+.sensor-right {
+  .humidity,
+  .temperature {
     display: flex;
     flex: 1;
     justify-content: center;

@@ -33,16 +33,16 @@ html {
 body,
 #app {
   @extend html;
+  background: linear-gradient(0deg, $color_black 50%, $color_red 50%);
 }
 
 .main--wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow: hidden;
-  @media screen and (min-width: 770px) {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
     flex-direction: row;
-  }
+    border-radius: 0.5rem 0 0 0.5rem;
+    background: white
 }
 
 .main--wrapper main {

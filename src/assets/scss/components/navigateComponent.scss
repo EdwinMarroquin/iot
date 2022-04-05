@@ -1,29 +1,25 @@
 
 .navigate {
   background: $color_black;
-  width: 100%;
+  // width: 100%;
   border-top: 1px solid invert($color_black);
-  @media screen and (min-width: 768px) {
-    width: 15rem;
-    margin: 0.5rem;
-    border-radius: 0.5rem;
-  }
+  max-width: 12rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: row;
-    @media screen and (min-width: 768px) {
-      flex-direction: column;
-    }
+    flex-direction: column;
     li {
       line-height: 100%;
       margin: 0.25rem;
       display: flex;
       flex: 1;
-      text-align: center;
-      @media screen and (min-width: 768px) {
+      justify-content: space-between;
+      @media screen and (min-width: 770px) {
         // margin: 1rem 1rem 0 1rem;
         text-align: left;
       }
@@ -36,13 +32,21 @@
         border-radius: 0.25rem;
         flex: 1;
         text-decoration: none;
-        i {
-          margin-right: 0.5rem;
-          display: none;
-          @media screen and (min-width: 768px) {
-            display: inline;
+        display:flex;
+        flex-direction:row;
+        .menu-label {
+          width: 0;
+          margin:0;
+          overflow: hidden;
+          &.active {
+            margin-left: 1rem;
+            width: 10rem;
           }
         }
+        i {
+          display: flex;
+        }
+
 
         &:hover {
           color: $color_red;

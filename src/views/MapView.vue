@@ -3,7 +3,7 @@
     api-key="AIzaSyAor4_IQ6zbgIQ44djnjKo1EdsFD8CyqfQ"
     style="width: 100%; height: 100%"
     :styles="[2]"
-    :zoom="11"
+    :zoom="11.61"
     :center="center"
   >
     <Marker v-for="(s, k) in dataStations" :key="k" :options="s.options">
@@ -24,8 +24,8 @@ import { stations } from "@/data/stations.js";
 const listStations = ref(stations);
 
 const center = ref({
-  lat: parseFloat(4.6456398),
-  lng: parseFloat(-74.1788349),
+  lat: parseFloat(4.643843),
+  lng: parseFloat(-74.1074564),
 });
 const fullData = ref([]);
 const dataStations = reactive([]);
