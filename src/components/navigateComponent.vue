@@ -14,6 +14,14 @@
         </router-link>
       </li>
     </ul>
+    <ul style="margin-top:auto">
+      <li>
+        <router-link to="/config">
+          <i class="fat fa-cog"></i>
+          <div :class="['menu-label', active ? 'active' : '']">CONFIGURACION</div>
+        </router-link>
+      </li>
+    </ul>
   </nav>
 </template>
 

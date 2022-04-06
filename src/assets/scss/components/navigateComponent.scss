@@ -5,6 +5,8 @@
   max-width: 12rem;
   margin: 0.5rem;
   border-radius: 0.5rem;
+  display:flex;
+  flex-direction:column;
 
   ul {
     list-style: none;

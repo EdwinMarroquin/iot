@@ -48,6 +48,11 @@ const router = createRouter({
       component: () => import("../views/GeoMapView.vue"),
     },
     {
+      path: "/config",
+      name: "config",
+      component: () => import("../views/ConfigView.vue"),
+    },
+    {
       path: "/comming",
       name: "comming",
       component: () => import("../views/CommingView.vue"),
