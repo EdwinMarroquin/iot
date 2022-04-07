@@ -27,9 +27,7 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title"></div>
         <div class="card-sensor-content-info">
-          <div
-            class="card-sensor-content-info-icon fad fa-hand-holding-water"
-          ></div>
+          <div class="card-sensor-content-info-icon fad fa-hand-holding-water"></div>
           <div style="width: 70%; background: silver; height: 1rem"></div>
         </div>
       </div>
@@ -37,7 +35,7 @@
     <router-link
       v-else
       class="card-sensor"
-      :to="'/sensor/' + sensorId"
+      :to="dummy ? '' : `/sensor/${sensorId}`"
       :class="[active ? 'sensor-active' : '']"
     >
       <div class="card-sensor-title">{{ info.name }}</div>
@@ -64,9 +62,7 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title">Humedad:</div>
         <div class="card-sensor-content-info">
-          <div
-            class="card-sensor-content-info-icon fad fa-hand-holding-water"
-          ></div>
+          <div class="card-sensor-content-info-icon fad fa-hand-holding-water"></div>
           {{ parseFloat(curr.field2).toFixed(2) }} %
         </div>
       </div>
@@ -75,22 +71,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useAppState } from "@/stores/appState";
+
+import { c2f, f2c, addZeros } from '@/assets/scripts/converUnits.js';
 
 const props = defineProps({
   sensorId: {
     type: Number,
     required: true,
   },
+  dummy: {
+    type: Boolean,
+    default: false,
+  },
 });
-
-const addZeros = (n) => {
-  if (n <= 9) {
-    return `0${n}`;
-  }
-  return n.toString();
-};
 
 const feeds = ref({});
 const info = ref({});
@@ -129,9 +124,20 @@ const getData = async () => {
 };
 
 onMounted(async () => {
-  await setInterval(async () => {
-    await getData();
-  }, 2000);
+  if (!props.dummy) {
+    await setInterval(async () => {
+      await getData();
+    }, 2000);
+  } else {
+    rendered.value = true;
+    info.value.name = "Card Sensor";
+    curr.value = {
+      date: "00/00/00",
+      time: "00:00:00",
+      field1: c2f(12.34),
+      field2: 56.78,
+    };
+  }
 });
 </script>
 

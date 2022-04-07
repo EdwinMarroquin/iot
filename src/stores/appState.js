@@ -3,7 +3,7 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 export const useAppState = defineStore({
   id: "appState",
   state: () => ({
-    load: false,
+    load: "false",
     count: 0,
   }),
   getters: {
