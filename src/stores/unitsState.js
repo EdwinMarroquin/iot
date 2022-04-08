@@ -17,7 +17,7 @@ export const useUnitsState = defineStore({
   },
   actions: {
     async setCelcius(c) {
-      this.$state.celcius = (c === "1" ? "0" : "1");
+      this.$state.celcius = !c ? 0 : 1;
       localStorage.setItem("celcius", this.$state.celcius);
     },
   },

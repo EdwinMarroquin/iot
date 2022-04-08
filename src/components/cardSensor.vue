@@ -19,7 +19,9 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title"></div>
         <div class="card-sensor-content-info">
-          <div class="card-sensor-content-info-icon fad fa-temperature-sun"></div>
+          <div
+            class="card-sensor-content-info-icon fad fa-temperature-sun"
+          ></div>
           <div style="width: 70%; background: silver; height: 1rem"></div>
         </div>
       </div>
@@ -27,7 +29,9 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title"></div>
         <div class="card-sensor-content-info">
-          <div class="card-sensor-content-info-icon fad fa-hand-holding-water"></div>
+          <div
+            class="card-sensor-content-info-icon fad fa-hand-holding-water"
+          ></div>
           <div style="width: 70%; background: silver; height: 1rem"></div>
         </div>
       </div>
@@ -54,7 +58,9 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title">Temperatura:</div>
         <div class="card-sensor-content-info">
-          <div class="card-sensor-content-info-icon fad fa-temperature-sun"></div>
+          <div
+            class="card-sensor-content-info-icon fad fa-temperature-sun"
+          ></div>
           {{ parseFloat(curr.field1).toFixed(2) }} &#176;C
         </div>
       </div>
@@ -62,7 +68,9 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title">Humedad:</div>
         <div class="card-sensor-content-info">
-          <div class="card-sensor-content-info-icon fad fa-hand-holding-water"></div>
+          <div
+            class="card-sensor-content-info-icon fad fa-hand-holding-water"
+          ></div>
           {{ parseFloat(curr.field2).toFixed(2) }} %
         </div>
       </div>
@@ -71,15 +79,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useAppState } from "@/stores/appState";
 
-import { c2f, f2c, addZeros } from '@/assets/scripts/converUnits.js';
+import { c2f, addZeros } from "@/assets/scripts/converUnits.js";
 
 const props = defineProps({
   sensorId: {
     type: Number,
-    required: true,
   },
   dummy: {
     type: Boolean,
@@ -105,9 +112,10 @@ const getData = async () => {
 
   const dt = new Date(curr.value.created_at);
 
-  curr.value.date = `${addZeros(dt.getDay())}/${addZeros(
+  curr.value.date = `${await addZeros(dt.getDay())}/${await addZeros(
     dt.getMonth()
-  )}/${dt.getFullYear()}`;
+  )}/${await addZeros(dt.getFullYear())}`;
+
   curr.value.time = `${addZeros(dt.getHours())}:${addZeros(
     dt.getMinutes()
   )}:${addZeros(dt.getSeconds())}`;
