@@ -61,7 +61,7 @@
           <div
             class="card-sensor-content-info-icon fad fa-temperature-sun"
           ></div>
-          {{ parseFloat(curr.field1).toFixed(2) }} &#176;C
+          {{ parseUnits(parseFloat(curr.field1)) }}
         </div>
       </div>
 
@@ -82,7 +82,7 @@
 import { ref, onMounted } from "vue";
 import { useAppState } from "@/stores/appState";
 
-import { c2f, addZeros } from "@/assets/scripts/converUnits.js";
+import { c2f, addZeros, parseUnits } from "@/assets/scripts/converUnits.js";
 
 const props = defineProps({
   sensorId: {
@@ -112,7 +112,7 @@ const getData = async () => {
 
   const dt = new Date(curr.value.created_at);
 
-  curr.value.date = `${await addZeros(dt.getDay())}/${await addZeros(
+  curr.value.date = `${await addZeros(dt.getDate())}/${await addZeros(
     dt.getMonth()
   )}/${await addZeros(dt.getFullYear())}`;
 
@@ -142,8 +142,8 @@ onMounted(async () => {
     curr.value = {
       date: "00/00/00",
       time: "00:00:00",
-      field1: c2f(12.34),
-      field2: 56.78,
+      field1: "00.00",
+      field2: "00.00",
     };
   }
 });

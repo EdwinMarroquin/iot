@@ -1,7 +1,17 @@
+import { useUnitsState } from "@/stores/unitsState";
+
+const unitsStore = useUnitsState();
+
 const addZeros = (val) => (val <= 9 ? `0${val}` : val);
 
-const c2f = (c) => c * (9 / 5) + 32;
+const c2f = (c) => (c * (9 / 5)) + 32;
 
 const f2c = (t) => (t - 32) * (5 / 9);
 
-export { c2f, f2c, addZeros };
+const parseUnits = (v) => {
+  return unitsStore.getCelcius === "1"
+    ? `${parseFloat(c2f(v)).toFixed(2)} °F`
+    : `${parseFloat(v).toFixed(2)} °C`;
+};
+
+export { c2f, f2c, addZeros, parseUnits };
