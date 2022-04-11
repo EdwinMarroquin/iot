@@ -3,20 +3,24 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 export const useAppState = defineStore({
   id: "appState",
   state: () => ({
-    load: "false",
+    loading: "false",
     count: 0,
+    counter: 0,
   }),
   getters: {
-    getLoad: (state) => state.load,
+    getLoading: (state) => state.loading,
     getCount: (state) => state.count,
+    getCounter: (state) => state.counter,
   },
   actions: {
-    async setLoad(l) {
-      this.load = l;
-      console.log(this.load, l);
+    async setLoading(l) {
+      this.$state.loading = l;
     },
     async incrementCount() {
       await this.count++;
+    },
+    async updateStatus() {
+      await this.counter++;
     },
   },
 });
