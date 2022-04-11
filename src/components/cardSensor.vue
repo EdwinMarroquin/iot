@@ -1,38 +1,42 @@
 <template>
-  <Transition name="fade" :duration="{ enter: 1000, leave: 800 }" mode="out-in">
+  <Transition name="fade" mode="out-in">
     <div
       v-if="rendered === false"
       class="card-sensor animated"
       style="filter: blur(2px) grayscale(100%)"
     >
       <div class="card-sensor-title">
-        <div
-          style="
-            margin-bottom: 0.5rem;
-            width: 100%;
-            background: silver;
-            height: 1rem;
-          "
-        ></div>
+        CARD SENSOR
       </div>
 
-      <div class="card-sensor-content">
-        <div class="card-sensor-content-title"></div>
+      <div class="card-sensor-content datetime">
         <div class="card-sensor-content-info">
-          <div
-            class="card-sensor-content-info-icon fad fa-temperature-sun"
-          ></div>
-          <div style="width: 70%; background: silver; height: 1rem"></div>
+          <i class="fad fa-calendar card-sensor-content-info-icon"></i>
+          00/00/00
+        </div>
+        <div class="card-sensor-content-info">
+          <i class="fad fa-clock card-sensor-content-info-icon"></i>
+          00:00:00
         </div>
       </div>
 
       <div class="card-sensor-content">
-        <div class="card-sensor-content-title"></div>
+        <div class="card-sensor-content-title">Temperature</div>
+        <div class="card-sensor-content-info">
+          <div
+            class="card-sensor-content-info-icon fad fa-temperature-sun"
+          ></div>
+          00.00 °C
+        </div>
+      </div>
+
+      <div class="card-sensor-content">
+        <div class="card-sensor-content-title">Humidity</div>
         <div class="card-sensor-content-info">
           <div
             class="card-sensor-content-info-icon fad fa-hand-holding-water"
           ></div>
-          <div style="width: 70%; background: silver; height: 1rem"></div>
+          00.00 %
         </div>
       </div>
     </div>
@@ -61,7 +65,7 @@
           <div
             class="card-sensor-content-info-icon fad fa-temperature-sun"
           ></div>
-          {{ parseUnits(parseFloat(curr.field1)) }}
+          {{ parseUnits(curr.field1) }}
         </div>
       </div>
 
@@ -79,10 +83,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch, watchEffect } from "vue";
 import { useAppState } from "@/stores/appState";
 
-import { c2f, addZeros, parseUnits } from "@/assets/scripts/converUnits.js";
+import { addZeros, parseUnits } from "@/assets/scripts/converUnits.js";
 
 const props = defineProps({
   sensorId: {
@@ -101,6 +105,7 @@ const curr = ref({});
 const active = ref(false);
 const rendered = ref(false);
 
+
 const getData = async () => {
   const data = await fetch(
     `https://api.thingspeak.com/channels/${props.sensorId}/feeds.json`
@@ -109,6 +114,7 @@ const getData = async () => {
   feeds.value = d.feeds;
   info.value = d.channel;
   curr.value = feeds.value[feeds.value.length - 1];
+
 
   const dt = new Date(curr.value.created_at);
 
@@ -120,7 +126,6 @@ const getData = async () => {
     dt.getMinutes()
   )}:${addZeros(dt.getSeconds())}`;
 
-  await useAppState().incrementCount();
 
   if (prev.value.created_at !== curr.value.created_at) {
     prev.value = curr.value;
@@ -128,6 +133,8 @@ const getData = async () => {
   } else {
     active.value = false;
   }
+  // curr.value.field1 = parseUnits(curr.value.field1);
+
   rendered.value = true;
 };
 
@@ -162,15 +169,15 @@ onMounted(async () => {
 
 @keyframes pulse {
   0% {
-    filter: blur(2px) grayscale(100%);
-  }
-
-  50% {
     filter: blur(4px) grayscale(100%);
   }
 
+  50% {
+    filter: blur(6px) grayscale(100%);
+  }
+
   100% {
-    filter: blur(2px) grayscale(100%);
+    filter: blur(4px) grayscale(100%);
   }
 }
 

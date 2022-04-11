@@ -8,18 +8,18 @@ export const useUnitsState = defineStore({
     formatTime: 1,
   }),
   getters: {
-    getCelcius: (state) =>
-      localStorage.getItem("celcius") !== undefined
-        ? localStorage.getItem("celcius")
-        : state["celcius"],
+    getCelcius: () =>
+      localStorage.celcius !== undefined
+        ? localStorage.celcius
+        : 0,
     getFormatDate: (state) => state.formatDate,
     getFormatTime: (state) => state.formatDate,
   },
   actions: {
     async setCelcius(c) {
       this.$state.celcius = !c ? 0 : 1;
-      localStorage.setItem("celcius", this.$state.celcius);
-      window.location.reload();
+      await localStorage.setItem("celcius", this.$state.celcius);
+      // window.location.reload();
     },
   },
 });

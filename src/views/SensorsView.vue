@@ -22,7 +22,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .sensors {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
 }
 </style>

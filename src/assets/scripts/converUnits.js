@@ -4,12 +4,16 @@ const unitsStore = useUnitsState();
 
 const addZeros = (val) => (val <= 9 ? `0${val}` : val);
 
-const c2f = (c) => (c * (9 / 5)) + 32;
+const c2f = (c) => c * (9 / 5) + 32;
 
 const f2c = (t) => (t - 32) * (5 / 9);
 
 const parseUnits = (v) => {
-  return unitsStore.getCelcius === "1"
+  let c =
+    localStorage.celcius !== undefined
+      ? localStorage.celcius
+      : unitsStore.getCelcius;
+  return c === "1"
     ? `${parseFloat(c2f(v)).toFixed(2)} °F`
     : `${parseFloat(v).toFixed(2)} °C`;
 };
