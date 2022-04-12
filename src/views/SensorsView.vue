@@ -1,22 +1,21 @@
 <template>
   <div class="sensors">
-    <CardSensor
-      v-if="statusRender"
-      v-for="(station, key) in listStations"
-      :key="key"
-      :sensorId="station.id"
-    />
+    <CardSensor v-if="statusRender" v-for="(station, key) in listStations"
+      :key="key" :sensorId="station.id" />
     <div class="loading" v-else>
       <div class="loading-spinner"></div>
       <div class="loading-progress">
+        <div
+          class="loading-progress-stat"
+          :style="{ width: statusLoading + '%' }"
+        ></div>
         <div class="loading-progress-label">
-          {{
+        {{
             statusLoading === 0
               ? "LOADING ..."
               : parseFloat(statusLoading).toFixed(2) + " %"
           }}
         </div>
-        <div class="loading-progress-stat" :style="{ width: statusLoading + '%' }"></div>
       </div>
     </div>
   </div>
@@ -36,15 +35,6 @@ const statusRender = computed(() => {
 
 const statusLoading = ref(0);
 
-const checkOnlineStatus = async () => {
-  try {
-    const online = await fetch('https://google.com');
-    return online.status >= 200 && online.status < 300;
-  } catch(err) {
-    return this;
-  }
-}
-
 onMounted(async () => {
   stations.forEach(async (s, i) => {
     const data = await fetch(
@@ -58,7 +48,6 @@ onMounted(async () => {
       }, 200 * i);
     }
   });
-  checkOnlineStatus();
 });
 </script>
 
@@ -67,14 +56,17 @@ onMounted(async () => {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
+
 .sensors {
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+
   .loading {
     position: absolute;
     top: 50%;
@@ -84,6 +76,7 @@ onMounted(async () => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     &-spinner {
       width: 3rem;
       height: 3rem;
@@ -94,8 +87,9 @@ onMounted(async () => {
       margin-bottom: 1rem;
       animation: spin linear 0.5s infinite;
     }
+
     &-progress {
-      border: 1px solid #fbc02d;
+      box-shadow: inset 0 0 0 2px #fbc02d;
       width: 10rem;
       height: 1.5rem;
       display: flex;
@@ -104,18 +98,24 @@ onMounted(async () => {
       position: relative;
       border-radius: 0.5rem;
       overflow: hidden;
+
       &-label {
-        z-index: 1;
+        color: black;
+        mix-blend-mode: luminosity;
+
       }
+
       &-stat {
         position: absolute;
         top: 0;
         left: 0;
+        width: 0%;
         content: "";
         width: 10%;
         height: 100%;
         display: block;
         background: #fbc02d;
+        transition: all .5s linear;
       }
     }
   }
