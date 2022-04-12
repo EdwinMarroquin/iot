@@ -5,16 +5,26 @@
       <div class="config-item">
         UNIDADES :<fieldset class="units">
           °C
-          <input
-            type="checkbox"
-            name="units"
-            id="units"
-            @input="updateUnits"
-            :checked="getCelciusChecked"
-          />
+          <input type="checkbox" name="units" id="units" @input="updateUnits"
+            :checked="getCelciusChecked" />
           <label for="units"></label>
           °F
         </fieldset>
+      </div>
+    </div>
+    <div>
+      <div class="config-title">LANGUAGUE</div>
+      <div class="config-item">
+        <input type="radio" name="lng" id="lng1">
+        <label for="lng1">lng1</label>
+      </div>
+      <div class="config-item">
+        <input type="radio" name="lng" id="lng2">
+        <label for="lng2">lng2</label>
+      </div>
+      <div class="config-item">
+        <input type="radio" name="lng" id="lng3">
+        <label for="lng3">lng3</label>
       </div>
     </div>
   </div>

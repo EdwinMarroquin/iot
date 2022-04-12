@@ -9,7 +9,6 @@
     "preview": "vite preview --port 5050 --host localhost"
   },
   "dependencies": {
-    "leaflet": "^1.7.1",
     "pinia": "^2.0.13",
     "register-service-worker": "^1.7.2",
     "vue": "^3.2.31",
@@ -26,6 +25,7 @@
     "eslint-plugin-vue": "^8.5.0",
     "highcharts": "^10.0.0",
     "jsdom": "^19.0.0",
+    "leaflet": "^1.7.1",
     "prettier": "^2.6.2",
     "sass": "^1.49.11",
     "vite": "^2.9.1",

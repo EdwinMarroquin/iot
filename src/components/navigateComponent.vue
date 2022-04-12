@@ -16,8 +16,14 @@
     </ul>
     <ul style="margin-top:auto">
       <li>
+        <router-link to="/info">
+          <i class="fad fa-info-circle"></i>
+          <div class="menu-label">INFO</div>
+        </router-link>
+      </li>
+      <li>
         <router-link to="/config">
-          <i class="fat fa-cog"></i>
+          <i class="fad fa-cog"></i>
           <div :class="['menu-label', active ? 'active' : '']">CONFIGURACION</div>
         </router-link>
       </li>
