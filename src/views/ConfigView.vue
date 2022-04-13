@@ -1,5 +1,6 @@
 <template>
   <div class="config">
+    <div></div>
     <div>
       <CardSensor dummy :key="cS" />
       <div class="config-item">
@@ -14,19 +15,20 @@
     </div>
     <div>
       <div class="config-title">LANGUAGUE</div>
-      <div class="config-item">
+      <div class="config-lang">
         <input type="radio" name="lng" id="lng1">
-        <label for="lng1">lng1</label>
+        <label for="lng1">SPANISH</label>
       </div>
-      <div class="config-item">
+      <div class="config-lang">
         <input type="radio" name="lng" id="lng2">
-        <label for="lng2">lng2</label>
+        <label for="lng2">ENGLISH</label>
       </div>
-      <div class="config-item">
+      <div class="config-lang">
         <input type="radio" name="lng" id="lng3">
-        <label for="lng3">lng3</label>
+        <label for="lng3">CHINESSE</label>
       </div>
     </div>
+    <div></div>
   </div>
 </template>
 

@@ -13,6 +13,43 @@
     }
   }
 
+  &-lang {
+    $size: 1.5rem;
+    margin: 1rem 0;
+    width: 100%;
+    display:flex;
+    align-items: center;;
+    input[type="radio"] {
+      display:none;
+      &+label {
+        width:70%;
+        position: relative;
+        display: flex;
+        margin:auto;
+        padding: calc($size / 8);
+        padding-left: $size;
+        border-radius: $size;
+        background: silver;
+        justify-content: center;
+        align-items: center;
+        &:after {
+          content:"";
+          width: $size;
+          height: $size;
+          margin-left:auto;
+          border-radius: $size;
+        }
+      }
+      &:checked {
+        &+label {
+          &:after {
+            background:grey;
+          }
+        }
+      }
+    }
+  }
+
   &-item {
     display:flex;
     align-items: center;
