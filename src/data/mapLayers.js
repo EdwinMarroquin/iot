@@ -1,5 +1,5 @@
 const layers = {
-  Base: {
+  base: {
     url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
     options: {
       attribution:
@@ -8,7 +8,7 @@ const layers = {
       maxZoom: 20,
     },
   },
-  Dark: {
+  dark: {
     url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
     options: {
       attribution:
@@ -17,7 +17,7 @@ const layers = {
       maxZoom: 20,
     },
   },
-  Light: {
+  light: {
     url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
     options: {
       attribution:
@@ -26,7 +26,7 @@ const layers = {
       maxZoom: 20,
     },
   },
-  Printer: {
+  printer: {
     url: "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}",
     options: {
       attribution:

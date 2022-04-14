@@ -2,26 +2,30 @@
   <div class="config">
     <div>
       <div class="config-title">LANGUAGUE</div>
-      <div class="config-lang">
-        <input type="radio" name="lng" id="lng1">
-        <label for="lng1">SPANISH</label>
-      </div>
-      <div class="config-lang">
-        <input type="radio" name="lng" id="lng2">
-        <label for="lng2">ENGLISH</label>
-      </div>
-      <div class="config-lang">
-        <input type="radio" name="lng" id="lng3">
-        <label for="lng3">CHINESSE</label>
+      <div class="config-lang" v-for="(lk, li) in languagues" :key="li">
+        <input
+          type="radio"
+          name="lng"
+          :id="`lng${li}`"
+          :value="lk"
+          @change="updateLang"
+        />
+        <label :for="`lng${li}`">{{ lk.toUpperCase() }}</label>
       </div>
     </div>
     <div>
       <CardSensor dummy :key="cS" />
       <div class="config-item">
-        UNIDADES :<fieldset class="units">
+        UNIDADES :
+        <fieldset class="units">
           °C
-          <input type="checkbox" name="units" id="units" @input="updateUnits"
-            :checked="getCelciusChecked" />
+          <input
+            type="checkbox"
+            name="units"
+            id="units"
+            @input="updateUnits"
+            :checked="getCelciusChecked"
+          />
           <label for="units"></label>
           °F
         </fieldset>
@@ -30,23 +34,10 @@
     <div>
       <div id="map"></div>
       <div class="config-map">
-        <div class="config-map-item">
-          <input type="radio" name="layer" id="layer1" value="Base">
-          <label for="layer1">BASE</label>
+        <div class="config-map-item" v-for="(mk, mi) in layersStyles" :key="mi">
+          <input type="radio" name="layer" :id="`sml${mi}`" :value="mk" @change="updateStyleMap"/>
+          <label :for="`sml${mi}`">{{mk.toUpperCase()}}</label>
         </div>
-        <div class="config-map-item">
-          <input type="radio" name="layer" id="layer2" value="Light">
-          <label for="layer2">LIGHT</label>
-        </div>
-        <div class="config-map-item">
-          <input type="radio" name="layer" id="layer3" value="Dark">
-          <label for="layer3">DARK</label>
-        </div>
-        <div class="config-map-item">
-          <input type="radio" name="layer" id="layer4" value="Printer">
-          <label for="layer4">PRINTER</label>
-        </div>
-
       </div>
     </div>
   </div>
@@ -56,14 +47,15 @@
 import leaflet from "leaflet";
 import { computed, onMounted, ref } from "vue";
 
-
 import CardSensor from "../components/cardSensor.vue";
 import { useUnitsStore } from "@/stores/unitsStore";
 import { useLayersMapStore } from "@/stores/layersMapStore";
 
-import layers from '@/data/mapLayers.js'
+import layers from "@/data/mapLayers.js";
 
-console.log(layers)
+const languagues = ref(["espanish", "english", "chinesse"]);
+
+const layersStyles = ref(["base", "light", "dark", "printer"]);
 
 const cS = ref(0);
 const unitsStore = useUnitsStore();
@@ -81,8 +73,15 @@ const updateUnits = async (e) => {
   cS.value++;
 };
 
-onMounted(() => {
+const updateLang = async (e) => {
+  console.log(await e.target.value);
+};
 
+const updateStyleMap = async (e) => {
+  console.log(await e.target.value);
+};
+
+onMounted(() => {
   getCelciusChecked;
 
   const L = leaflet;
@@ -93,9 +92,9 @@ onMounted(() => {
 
   // Set the position and zoom level of the map
   const lm = useLayersMapStore().getLayerMap;
-  console.log(lm)
-  L.tileLayer(lm.url, lm.options).addTo(map)
-  console.log(L)
+  console.log(lm);
+  L.tileLayer(lm.url, lm.options).addTo(map);
+  console.log(L);
 });
 </script>
 

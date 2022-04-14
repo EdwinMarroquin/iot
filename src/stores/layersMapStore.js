@@ -8,7 +8,7 @@ const L = leaflet;
 export const useLayersMapStore = defineStore({
   id: "layersMapStore",
   state: () => ({
-    layername:"Base",
+    layername:"base",
     layerdata: {
       url: "",
       options: {},
