@@ -25,12 +25,12 @@
 import { onMounted, ref, computed } from "vue";
 import { stations } from "@/data/stations.js";
 import CardSensor from "../components/cardSensor.vue";
-import { useAppState } from "@/stores/appState";
+import { useAppStore } from "@/stores/appStore";
 
 const listStations = ref(stations);
 
 const statusRender = computed(() => {
-  return useAppState().getCounter >= stations.length ? true : false;
+  return useAppStore().getCounter >= stations.length ? true : false;
 });
 
 const statusLoading = ref(0);
@@ -42,9 +42,9 @@ onMounted(async () => {
     );
     if ((await data.status) === 200) {
       setTimeout(async () => {
-        await useAppState().updateStatus();
+        await useAppStore().updateStatus();
         statusLoading.value =
-          100 * (useAppState().getCounter / stations.length);
+          100 * (useAppStore().getCounter / stations.length);
       }, 200 * i);
     }
   });

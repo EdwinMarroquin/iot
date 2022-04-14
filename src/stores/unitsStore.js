@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 
-export const useUnitsState = defineStore({
-  id: "unitState",
+export const useUnitsStore = defineStore({
+  id: "unitsStore",
   state: () => ({
     celcius: 1,
     formatDate: 1,
@@ -25,5 +25,5 @@ export const useUnitsState = defineStore({
 });
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useUnitsState, import.meta.hot));
+  import.meta.hot.accept(acceptHMRUpdate(useUnitsStore, import.meta.hot));
 }

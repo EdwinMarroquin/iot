@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 
-export const useAppState = defineStore({
-  id: "appState",
+export const useAppStore = defineStore({
+  id: "appStore",
   state: () => ({
     loading: "false",
     count: 0,
@@ -26,5 +26,5 @@ export const useAppState = defineStore({
 });
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useAppState, import.meta.hot));
+  import.meta.hot.accept(acceptHMRUpdate(useAppStore, import.meta.hot));
 }

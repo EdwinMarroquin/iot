@@ -1,6 +1,6 @@
-import { useUnitsState } from "@/stores/unitsState";
+import { useUnitsStore } from "@/stores/unitsStore";
 
-const unitsStore = useUnitsState();
+const unitsStore = useUnitsStore();
 
 const addZeros = (val) => (val <= 9 ? `0${val}` : val);
 
