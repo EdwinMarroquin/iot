@@ -4,36 +4,38 @@
 
 <script setup>
 import leaflet from "leaflet";
-import { onMounted, computed } from "vue";
+import { onMounted,  computed, nextTick } from "vue";
 
 import { useLayersMapStore } from "@/stores/layersMapStore";
-
-const dataMap = computed(() => useLayersMapStore().getLayerMap);
+import layers from "@/data/mapLayers";
 
 const props = defineProps({
   optionsMap: {
     type: Object,
-    default: {}
   },
 });
-
 
 const L = leaflet;
 
 
 onMounted(async () => {
+
+  const layerName = await computed(() => {
+    return useLayersMapStore().getLayerName;
+  });
+
   let optionsMap = {
-    ...dataMap.value.options,
+    ...layers[localStorage.layername].options,
     ...props.optionsMap,
   };
 
   const map = L.map("map", {
-    center: [4.6667909405191095, -74.1088525556178],
-    zoom: 10,
+    center: [4.6513702, -74.1136195],
+    zoom: 5,
   });
 
-  // Set the position and zoom level of the map
-  L.tileLayer(dataMap.value.url, optionsMap).addTo(map);
+
+  L.tileLayer(layers[localStorage.layername].url, optionsMap).addTo(map);
 });
 </script>
 

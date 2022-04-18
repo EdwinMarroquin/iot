@@ -2,8 +2,7 @@
   <div class="config">
     <div class="display">
       <CardSensor dummy :key="cS" />
-      <LeafletMap :key="mS" />
-      <!-- <div id="map"></div> -->
+      <img :src="imgMap" alt="" :key="mS" />
     </div>
     <div>
       <div class="config-item">
@@ -52,13 +51,21 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 
 import CardSensor from "../components/cardSensor.vue";
-import LeafletMap from "../components/leafletMap.vue";
 
 import { useUnitsStore } from "@/stores/unitsStore";
-import { useLayersMapStore } from "@/stores/layersMapStore";
+import { useLayersMapStore } from "@/stores/layersMapStore.js";
+
+const imgMap = ref();
+
+const getRouteMap = async () => {
+  imgMap.value = new URL(
+    `../assets/img/map_${localStorage.layername}.png`,
+    import.meta.url
+  ).href;
+};
 
 const languagues = ref(["espanish", "english", "chinesse"]);
 const layersStyles = ref(["base", "light", "dark", "printer"]);
@@ -78,8 +85,8 @@ const getLayerChecked = (e) => {
   let l =
     localStorage.layername !== undefined
       ? localStorage.layername
-      : useLayersMapStore().getLayername();
-   return l === e ? true : false;
+      : useLayersMapStore().getLayerName;
+  return l === e ? true : false;
 };
 
 const updateUnits = async (e) => {
@@ -92,12 +99,17 @@ const updateLang = async (e) => {
 };
 
 const updateStyleMap = async (e) => {
-  await useLayersMapStore().setLayerMap(e.target.value);
-  setTimeout(() => mS.value++, 500);
+  await useLayersMapStore().setLayerName(e.target.value);
+  getRouteMap();
 };
 
-onMounted(() => {
-  getCelciusChecked;
+onBeforeMount(async ()=>{
+
+  await getRouteMap;
+})
+
+onMounted(async () => {
+  await getCelciusChecked;
 });
 </script>
 
@@ -108,14 +120,16 @@ onMounted(() => {
   pointer-events: none;
 }
 
-#map {
+.map {
   display: flex;
   flex: 1;
   width: 100%;
-  padding-bottom: 50%;
+  /* height: 100%; */
+  padding-bottom: 25%;
   border: 1px solid silver;
   border-radius: 0.5rem;
 }
+
 .leaflet-control-zoom.leaflet-bar.leaflet-control,
 .leaflet-control-attribution.leaflet-control {
   display: none !important;
