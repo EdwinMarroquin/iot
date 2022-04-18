@@ -1,20 +1,11 @@
 <template>
   <div class="config">
-    <div>
-      <div class="config-title">LANGUAGUE</div>
-      <div class="config-lang" v-for="(lk, li) in languagues" :key="li">
-        <input
-          type="radio"
-          name="lng"
-          :id="`lng${li}`"
-          :value="lk"
-          @change="updateLang"
-        />
-        <label :for="`lng${li}`">{{ lk.toUpperCase() }}</label>
-      </div>
+    <div class="display">
+      <CardSensor dummy :key="cS" />
+      <LeafletMap :key="mS" />
+      <!-- <div id="map"></div> -->
     </div>
     <div>
-      <CardSensor dummy :key="cS" />
       <div class="config-item">
         UNIDADES :
         <fieldset class="units">
@@ -30,46 +21,69 @@
           °F
         </fieldset>
       </div>
-    </div>
-    <div>
-      <div id="map"></div>
       <div class="config-map">
         <div class="config-map-item" v-for="(mk, mi) in layersStyles" :key="mi">
-          <input type="radio" name="layer" :id="`sml${mi}`" :value="mk" @change="updateStyleMap"/>
-          <label :for="`sml${mi}`">{{mk.toUpperCase()}}</label>
+          <input
+            type="radio"
+            name="layer"
+            :id="`sml${mi}`"
+            :value="mk"
+            @change="updateStyleMap"
+            :checked="getLayerChecked(mk)"
+          />
+          <label :for="`sml${mi}`">{{ mk.toUpperCase() }}</label>
         </div>
+      </div>
+    </div>
+    <div>
+      <div class="config-title">LANGUAGUE</div>
+      <div class="config-lang" v-for="(lk, li) in languagues" :key="li">
+        <input
+          type="radio"
+          name="lng"
+          :id="`lng${li}`"
+          :value="lk"
+          @change="updateLang"
+        />
+        <label :for="`lng${li}`">{{ lk.toUpperCase() }}</label>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import leaflet from "leaflet";
 import { computed, onMounted, ref } from "vue";
 
 import CardSensor from "../components/cardSensor.vue";
+import LeafletMap from "../components/leafletMap.vue";
+
 import { useUnitsStore } from "@/stores/unitsStore";
 import { useLayersMapStore } from "@/stores/layersMapStore";
 
-import layers from "@/data/mapLayers.js";
-
 const languagues = ref(["espanish", "english", "chinesse"]);
-
 const layersStyles = ref(["base", "light", "dark", "printer"]);
 
 const cS = ref(0);
-const unitsStore = useUnitsStore();
+const mS = ref(0);
 
 const getCelciusChecked = computed(() => {
   let c =
     localStorage.celcius !== undefined
       ? localStorage.celcius
-      : unitsStore.getCelcius;
+      : useUnitsStore().getCelcius;
   return c === "1" ? true : false;
 });
 
+const getLayerChecked = (e) => {
+  let l =
+    localStorage.layername !== undefined
+      ? localStorage.layername
+      : useLayersMapStore().getLayername();
+   return l === e ? true : false;
+};
+
 const updateUnits = async (e) => {
-  await unitsStore.setCelcius(e.target.checked);
+  await useUnitsStore().setCelcius(e.target.checked);
   cS.value++;
 };
 
@@ -78,33 +92,32 @@ const updateLang = async (e) => {
 };
 
 const updateStyleMap = async (e) => {
-  console.log(await e.target.value);
+  await useLayersMapStore().setLayerMap(e.target.value);
+  setTimeout(() => mS.value++, 500);
 };
 
 onMounted(() => {
   getCelciusChecked;
-
-  const L = leaflet;
-  var map = L.map("map", {
-    center: [4.6667909405191095, -74.1088525556178],
-    zoom: 10,
-  });
-
-  // Set the position and zoom level of the map
-  const lm = useLayersMapStore().getLayerMap;
-  console.log(lm);
-  L.tileLayer(lm.url, lm.options).addTo(map);
-  console.log(L);
 });
 </script>
 
 <style>
 @import url(https://unpkg.com/leaflet@1.7.1/dist/leaflet.css);
 
+.display {
+  pointer-events: none;
+}
+
 #map {
   display: flex;
   flex: 1;
   width: 100%;
-  padding-bottom: 75%;
+  padding-bottom: 50%;
+  border: 1px solid silver;
+  border-radius: 0.5rem;
+}
+.leaflet-control-zoom.leaflet-bar.leaflet-control,
+.leaflet-control-attribution.leaflet-control {
+  display: none !important;
 }
 </style>

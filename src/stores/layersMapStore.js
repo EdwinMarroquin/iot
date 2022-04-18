@@ -1,36 +1,43 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import layers from "@/data/mapLayers.js";
-import leaflet from "leaflet";
-
-const L = leaflet;
-
 
 export const useLayersMapStore = defineStore({
   id: "layersMapStore",
   state: () => ({
-    layername:"base",
+    layername: "base",
     layerdata: {
       url: "",
       options: {},
     },
   }),
   getters: {
+    getLayername: (state) =>
+      localStorage.layername !== undefined
+        ? localStorage.layername
+        : state.layername,
+
     getLayerMap: (state) => {
-      var l;
-      if (localStorage.layermap !== undefined) {
-        l = localStorage.layermap;
+      let l;
+      if (
+        localStorage.layername !== undefined &&
+        localStorage.layername !== false
+      ) {
+        l = localStorage.layername;
       } else {
-        l = state.layername;
+        localStorage.layername = state.layername;
+        l = localStorage.layername;
       }
+
       state.layerdata.url = layers[l].url;
       state.layerdata.options = layers[l].options;
       return state.layerdata;
     },
   },
+
   actions: {
     async setLayerMap(c) {
-      this.$state.layermap = !c;
-      await localStorage.setItem("layermap", this.$state.layermap);
+      this.$state.layername = c;
+      await localStorage.setItem("layername", this.$state.layername);
     },
   },
 });

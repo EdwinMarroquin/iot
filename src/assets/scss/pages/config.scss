@@ -1,15 +1,19 @@
 .config {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
   grid-gap: 1rem;
+  margin-right: 1rem;
   @media screen and (min-width: 770px) {
     display: flex;
     flex-direction: row;
+    margin-right: 0;
   }
-  div {
+  .display {
     flex: 1;
+    max-width: 24rem;
     .card-sensor {
       margin: 0;
+      margin-bottom:1rem;
     }
   }
 
@@ -97,7 +101,8 @@
   &-map {
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
-
+    @media screen and (min-width: 770px) {
+    }
   }
 
 }

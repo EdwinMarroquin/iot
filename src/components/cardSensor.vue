@@ -71,7 +71,6 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useAppStore } from "@/stores/appStore";
 
 import { addZeros, parseUnits } from "@/assets/scripts/converUnits.js";
 
