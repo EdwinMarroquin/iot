@@ -13,8 +13,8 @@ import HeaderPartial from "@/partials/headerPartial.vue";
 import FooterPartial from "@/partials/footerPartial.vue";
 import MainPartial from "@/partials/mainPartial.vue";
 
-
-import { ref } from "vue";
+import { setLocalVars } from "./assets/scripts/initializeConfig";
+import { onMounted, ref } from "vue";
 
 const listRoutes = ref([
   { label: "home", path: "/", icon: "home" },
@@ -22,4 +22,11 @@ const listRoutes = ref([
   { label: "map", path: "/map", icon: "map" },
   { label: "customMap", path: "/customMap", icon: "draw-polygon" },
 ]);
+
+onMounted(() => {
+  setLocalVars([
+    { name: "celcius", value: 1 },
+    { name: "layername", value: "base" },
+  ]);
+});
 </script>

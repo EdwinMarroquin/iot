@@ -4,7 +4,7 @@
 
 <script setup>
 import leaflet from "leaflet";
-import { onMounted,  computed, nextTick } from "vue";
+import { onMounted, computed } from "vue";
 
 import { useLayersMapStore } from "@/stores/layersMapStore";
 import layers from "@/data/mapLayers";
@@ -13,16 +13,15 @@ const props = defineProps({
   optionsMap: {
     type: Object,
   },
+  geojson: {
+    type: Object,
+  },
 });
 
 const L = leaflet;
 
 
 onMounted(async () => {
-
-  const layerName = await computed(() => {
-    return useLayersMapStore().getLayerName;
-  });
 
   let optionsMap = {
     ...layers[localStorage.layername].options,
@@ -36,6 +35,10 @@ onMounted(async () => {
 
 
   L.tileLayer(layers[localStorage.layername].url, optionsMap).addTo(map);
+
+  if (props.geojson.lenght !== 0) {
+    console.log("geoJson")
+  }
 });
 </script>
 

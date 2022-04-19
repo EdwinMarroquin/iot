@@ -27,11 +27,15 @@
           <div :class="['menu-label', active ? 'active' : '']">CONFIGURACION</div>
         </router-link>
       </li>
+      <li>
+        <OnlineStatus/>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script setup>
+import OnlineStatus from './onlineStatus.vue';
 import { ref } from "vue";
 
 defineProps({
