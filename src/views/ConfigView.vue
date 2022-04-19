@@ -53,16 +53,15 @@
 <script setup>
 import { computed, onBeforeMount, onMounted, ref } from "vue";
 
-import CardSensor from "../components/cardSensor.vue";
+import { updateLocalVar, getLocalVar } from "../assets/scripts/initializeConfig";
 
-import { useUnitsStore } from "@/stores/unitsStore";
-import { useLayersMapStore } from "@/stores/layersMapStore.js";
+import CardSensor from "../components/cardSensor.vue";
 
 const imgMap = ref();
 
 const getRouteMap = async () => {
   imgMap.value = new URL(
-    `../assets/img/map_${localStorage.layername}.png`,
+    `../assets/img/map_${getLocalVar("layername")}.png`,
     import.meta.url
   ).href;
 };
@@ -74,23 +73,15 @@ const cS = ref(0);
 const mS = ref(0);
 
 const getCelciusChecked = computed(() => {
-  let c =
-    localStorage.celcius !== undefined
-      ? localStorage.celcius
-      : useUnitsStore().getCelcius;
-  return c === "1" ? true : false;
+  return getLocalVar("celcius");
 });
 
 const getLayerChecked = (e) => {
-  let l =
-    localStorage.layername !== undefined
-      ? localStorage.layername
-      : useLayersMapStore().getLayerName;
-  return l === e ? true : false;
+  return getLocalVar("layername") === e ? true : false;
 };
 
 const updateUnits = async (e) => {
-  await useUnitsStore().setCelcius(e.target.checked);
+  await updateLocalVar("celcius", !e.target.checked);
   cS.value++;
 };
 
@@ -99,17 +90,16 @@ const updateLang = async (e) => {
 };
 
 const updateStyleMap = async (e) => {
-  await useLayersMapStore().setLayerName(e.target.value);
-  getRouteMap();
+  updateLocalVar("layername", e.target.value);
+  await getRouteMap();
 };
 
-onBeforeMount(async ()=>{
-
-  await getRouteMap;
-})
+onBeforeMount(async () => {
+  getCelciusChecked;
+  });
 
 onMounted(async () => {
-  await getCelciusChecked;
+   getRouteMap();
 });
 </script>
 

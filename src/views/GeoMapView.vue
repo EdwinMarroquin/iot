@@ -1,12 +1,11 @@
 <template>
   <!-- <div id="map"></div> -->
-  <LeafletMap :key="mS" :geojson="geojson" />
+  <LeafletMap :key="mS"/>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import LeafletMap from "@/components/leafletMap.vue";
-import geojson from "@/data/bogotaShape.geojson";
 
 const mS = ref(0);
 

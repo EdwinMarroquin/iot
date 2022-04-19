@@ -14,14 +14,13 @@ const props = defineProps({
   },
   geojson: {
     type: Object,
+    value: () => {},
   },
 });
 
 const L = leaflet;
 
-
 onMounted(async () => {
-
   let optionsMap = {
     ...layers[localStorage.layername].options,
     ...props.optionsMap,
@@ -32,11 +31,10 @@ onMounted(async () => {
     zoom: 5,
   });
 
-
   L.tileLayer(layers[localStorage.layername].url, optionsMap).addTo(map);
 
-  if (props.geojson.lenght !== 0) {
-    console.log("geoJson")
+  if (props.geojson !== {} && props.geojson.length !== 0) {
+    console.log("geoJson");
   }
 });
 </script>
