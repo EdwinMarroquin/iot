@@ -4,9 +4,8 @@
 
 <script setup>
 import leaflet from "leaflet";
-import { onMounted, computed } from "vue";
+import { onMounted } from "vue";
 
-import { useLayersMapStore } from "@/stores/layersMapStore";
 import layers from "@/data/mapLayers";
 
 const props = defineProps({

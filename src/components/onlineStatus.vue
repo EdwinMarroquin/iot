@@ -1,8 +1,6 @@
 <template>
-  <div
-    :class="['progress', statusClass, statusClass !== 'error' ? 'hide' : '']"
-    v-if="!statusHide"
-  >
+  <div :class="['progress', statusClass, statusClass !== 'error' ? 'hide' : '']"
+    v-if="!statusHide">
     <div class="progress-indicator"></div>
     <div class="progress-label">{{ statusMessage }}</div>
   </div>
@@ -19,18 +17,27 @@ const statusClass = ref("error");
 const startTime = ref();
 const endTime = ref();
 
-//JUST AN EXAMPLE, PLEASE USE YOUR OWN PICTURE!
 var imageAddr = "https://avatars.githubusercontent.com/u/60857232?v=4";
 
 const InitiateSpeedDetection = () => {
-  window.setTimeout(MeasureConnectionSpeed, 1);
+  window.onoffline = () => {
+    statusMessage.value = "OFFLINE";
+    statusConnected.value = 0;
+    statusClass.value = "error";
+    statusHide.value = false;
+  };
+  window.ononline = () => {
+    statusMessage.value = "ONLINE";
+    statusConnected.value = 1;
+    statusClass.value = "success";
+    setTimeout(() => {
+      statusHide.value = true;
+    }, 1000);
+    window.location.reload()
+  };
+  setTimeout(MeasureConnectionSpeed, 1);
 };
 
-if (window.addEventListener) {
-  window.addEventListener("load", InitiateSpeedDetection, false);
-} else if (window.attachEvent) {
-  window.attachEvent("onload", InitiateSpeedDetection);
-}
 
 const MeasureConnectionSpeed = () => {
   var download = new Image();
@@ -44,8 +51,11 @@ const MeasureConnectionSpeed = () => {
     }, 1000);
   };
 
-  download.onerror = (err, msg) => {
+  download.onerror = () => {
     statusMessage.value = "OFFLINE";
+    statusConnected.value = 0;
+    statusClass.value = "error";
+    statusHide.value = false;
   };
 
   startTime.value = new Date().getTime();
@@ -54,9 +64,16 @@ const MeasureConnectionSpeed = () => {
 };
 
 onMounted(() => {
+
+  if (window.addEventListener) {
+    window.addEventListener("load", InitiateSpeedDetection, false);
+  } else if (window.attachEvent) {
+    window.attachEvent("onload", InitiateSpeedDetection);
+  }
+
   setInterval(() => {
     InitiateSpeedDetection();
-  }, 10000);
+  }, 1000);
 });
 </script>
 
@@ -100,7 +117,7 @@ onMounted(() => {
       height: 0;
     }
 
-    & > .progress-indicator {
+    &>.progress-indicator {
       &:after {
         animation: none;
         background: seagreen;
