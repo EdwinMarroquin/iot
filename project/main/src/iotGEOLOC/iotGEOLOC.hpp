@@ -11,6 +11,8 @@ void InitializeGEOLOC()
 void getGEOLOC()
 {
 
+  if(client)
+
   // http.begin(client, SERVER_GEOLOC);
   // delay(100); // See if this prevents the problm with connection refused and deep sleep
   // http.addHeader("Content-Type", "application/json");
