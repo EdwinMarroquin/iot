@@ -15,27 +15,23 @@ import MainPartial from "@/partials/mainPartial.vue";
 
 import { onMounted, ref } from "vue";
 
-import {
-  getAllLocalVars,
-  setLocalVars,
-} from "./assets/scripts/initializeConfig";
+import { setLocalVars } from "./assets/scripts/initializeConfig";
 
 const listRoutes = ref([
   { label: "home", path: "/", icon: "home" },
   { label: "sensors", path: "/sensors", icon: "sensor-cloud" },
   { label: "map", path: "/map", icon: "map" },
-  { label: "customMap", path: "/customMap", icon: "draw-polygon" },
+  { label: "lmap", path: "/lmap", icon: "draw-polygon" },
 ]);
 
 const initializeVariables = async () => {
-
   await setLocalVars([
     { name: "celcius", value: true },
     { name: "layername", value: "base" },
   ]);
-}
+};
 
 onMounted(async () => {
- await initializeVariables();
+  await initializeVariables();
 });
 </script>

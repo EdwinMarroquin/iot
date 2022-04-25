@@ -1,17 +1,14 @@
 <template>
-  <!-- <div id="map"></div> -->
-  <LeafletMap :key="mS"/>
+  <LeafletMap :geoPoints="gJson" />
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import LeafletMap from "@/components/leafletMap.vue";
+import geojson from "@/data/bogotaShape.json";
 
-const mS = ref(0);
+const gJson = ref(geojson);
 
-onMounted(() => {
-  setTimeout(() => mS.value++, 500);
-});
 </script>
 
 <style>

@@ -12,9 +12,8 @@ const props = defineProps({
   optionsMap: {
     type: Object,
   },
-  geojson: {
+  geoPoints: {
     type: Object,
-    value: () => {},
   },
 });
 
@@ -22,26 +21,30 @@ const L = leaflet;
 
 onMounted(async () => {
   let optionsMap = {
-    ...layers[localStorage.layername].options,
+    ...layers[await localStorage.getItem("layername")].options,
     ...props.optionsMap,
   };
 
   const map = L.map("map", {
     center: [4.6513702, -74.1136195],
-    zoom: 5,
+    zoom: 11,
   });
 
-  L.tileLayer(layers[localStorage.layername].url, optionsMap).addTo(map);
+  L.tileLayer(layers[await localStorage.getItem("layername")].url, optionsMap).addTo(map);
 
-  if (props.geojson !== {} && props.geojson.length !== 0) {
-    console.log("geoJson");
+  if (props.geoPoints !== {} && props.geoPoints.lenght !== 0) {
+    L.geoJSON(props.geoPoints).addTo(map);
   }
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #map {
   width: 100%;
   height: 100%;
+}
+#map > div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-overlay-pane > svg > g > path.leaflet-interactive {
+  stroke-width: 1px;
+  fill-opacity: 0.1;
 }
 </style>

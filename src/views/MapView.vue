@@ -46,8 +46,12 @@ const getStations = async () => {
       },
       options: {
         position: {
-          lat: parseFloat(d.channel.latitude),
-          lng: parseFloat(d.channel.longitude),
+          // usar si todos los canales estan correctamente configurados
+          // lat: parseFloat(d.channel.latitude),
+          // lng: parseFloat(d.channel.longitude),
+
+          lat: stations.filter(s => d.channel.id === s.id )[0].latitude,
+          lng: stations.filter(s => d.channel.id === s.id )[0].longitude,
         },
         title: d.channel.id.toString(),
       },

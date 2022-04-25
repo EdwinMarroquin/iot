@@ -7,13 +7,13 @@ const router = createRouter({
   linkExactActiveClass: "link--active",
   routes: [
     {
+      path: "/home",
+      redirect: "/",
+    },
+    {
       path: "/",
       name: "home",
       component: () => import("../views/HomeView.vue"),
-    },
-    {
-      path: "/home",
-      redirect: "/",
     },
     {
       path: "/Sensors",
@@ -43,19 +43,14 @@ const router = createRouter({
       component: () => import("../views/MapView.vue"),
     },
     {
-      path: "/customMap",
-      name: "customMap",
-      component: () => import("../views/GeoMapView.vue"),
+      path: "/lmap",
+      name: "lmap",
+      component: () => import("../views/LeafmapView.vue"),
     },
     {
       path: "/config",
       name: "config",
       component: () => import("../views/ConfigView.vue"),
-    },
-    {
-      path: "/comming",
-      name: "comming",
-      component: () => import("../views/CommingView.vue"),
     },
     {
       path: "/info",

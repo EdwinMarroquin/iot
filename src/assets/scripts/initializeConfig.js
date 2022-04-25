@@ -6,7 +6,6 @@ const clearLocalVar = (name) =>
 const clearAllLocalVar = () => localStorage.clear();
 
 const setLocalVar = (name, value = "") => {
-  console.log(name, value);
   localStorage.getItem(name) === undefined ||
   localStorage.getItem(name) === null
     ? localStorage.setItem(name, value)
