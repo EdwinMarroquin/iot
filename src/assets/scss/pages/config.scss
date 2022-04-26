@@ -1,36 +1,92 @@
 .config {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
-  grid-gap: 1rem;
-  margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   @media screen and (min-width: 770px) {
-    display: flex;
     flex-direction: row;
-    margin-right: 0;
   }
-  .display {
-    flex: 1;
-    max-width: 24rem;
-    .card-sensor {
+
+  &-display {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+    pointer-events: none;
+    @media screen and (min-width: 770px) {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      display:flex;
+      flex-direction: column;
+    }
+    &-sensor,
+    &-map {
+      height: 11rem;
       margin: 0;
-      margin-bottom:1rem;
+      max-width: 15rem;
+      @media screen and (min-width: 770px) {
+        width: 100%;
+        width: 25rem;
+        max-width: 25rem;
+      }
+    }
+
+    &-sensor {
+    }
+    &-map {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid silver;
+      border-radius: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @media screen and (min-width: 770px) {
+        height: 100%;
+        max-width: 25rem;
+      }
+      img {
+        position: absolute;
+        width: 150%;
+      }
     }
   }
 
-  &-lang, &-map-item {
+  &-options {
+    margin-left: 1rem;
+    flex:1;
+    .option {
+      &-title{}
+      &-selections{
+        &-item {
+          input {
+            display:none;
+            & + label {
+              width: 70%;
+              position: relative;
+              display:flex;
+              margin:auto;
+              padding: calc()
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-lang,
+  &-map-item {
     $size: 1.5rem;
     margin: 1rem 0;
-    width: 100%;
-    display:flex;
-    font-size: .8rem;
-    align-items: center;;
+    width: 10rem;
+    display: flex;
+    font-size: 0.8rem;
+    align-items: center;
     input[type="radio"] {
-      display:none;
-      &+label {
-        width:70%;
+      display: none;
+      & + label {
+        width: 70%;
         position: relative;
         display: flex;
-        margin:auto;
+        margin: auto;
         padding: calc($size / 8);
         padding-left: $size;
         border-radius: $size;
@@ -38,17 +94,17 @@
         justify-content: center;
         align-items: center;
         &:after {
-          content:"";
+          content: "";
           width: $size;
           height: $size;
-          margin-left:auto;
+          margin-left: auto;
           border-radius: $size;
         }
       }
       &:checked {
-        &+label {
+        & + label {
           &:after {
-            background:grey;
+            background: grey;
           }
         }
       }
@@ -56,11 +112,11 @@
   }
 
   &-item {
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: .5rem;
-    font-size: .8rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
     .units {
       $size: 1.5rem;
       border: none;
@@ -95,14 +151,12 @@
         }
       }
     }
-
   }
 
   &-map {
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
     @media screen and (min-width: 770px) {
     }
   }
-
 }
