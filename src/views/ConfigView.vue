@@ -7,22 +7,61 @@
       </div>
     </div>
     <div class="config-options">
-      <h1 class="config-options-title">Configuración</h1>
+      <h1 class="config-options-title">CONFIGURACIÓN</h1>
       <div class="config-options-option">
         <div class="option">
-          <div class="option-title">
-            UNIDADES
-          </div>
+          <div class="option-title">Unidades</div>
           <div class="option-selections">
             <div class="option-selections-item">
-              <input type="checkbox" name="units" id="units" @input="updateUnits">
-              <label for="units"></label>
+              <div class="option-selections-item-label">
+                Celcius
+              </div>
+              <input type="checkbox" name="units" id="units"
+                @input="updateUnits" />
+              <label for="units">
+                <div class="selection-label">SI</div>
+                <div class="selection-label">NO</div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="option">
+          <div class="option-title">Estilo del mapa</div>
+          <div class="option-selections">
+            <div class="option-selections-item" v-for="(mk, mi) in layersStyles"
+              :key="mi">
+              <div class="option-selections-item-label">
+                {{ mk.toUpperCase() }}
+              </div>
+              <input type="radio" name="layer" :id="`sml${mi}`" :value="mk"
+                @change="updateStyleMap" :checked="getLayerChecked(mk)" />
+              <label :for="`sml${mi}`">
+                <div class="selection-label">SI</div>
+                <div class="selection-label">NO</div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="option">
+          <div class="option-title">Lenguaje</div>
+          <div class="option-selections">
+            <div class="option-selections-item" v-for="(lk, li) in languages"
+              :key="li">
+              <div class="option-selections-item-label">
+                {{ lk.toUpperCase() }}
+              </div>
+              <input type="radio" name="layer" :id="`lng${li}`" :value="lk"
+                @change="updateLang" />
+              <label :for="`lng${li}`">
+                <div class="selection-label">SI</div>
+                <div class="selection-label">NO</div>
+              </label>
             </div>
           </div>
         </div>
       </div>
 
-      <div>
+      <!-- <div>
         <div class="config-item">
           UNIDADES :
           <fieldset class="units">
@@ -44,12 +83,12 @@
       </div>
       <div>
         <div class="config-title">LANGUAGUE</div>
-        <div class="config-lang" v-for="(lk, li) in languagues" :key="li">
+        <div class="config-lang" v-for="(lk, li) in languages" :key="li">
           <input type="radio" name="lng" :id="`lng${li}`" :value="lk"
             @change="updateLang" />
           <label :for="`lng${li}`">{{ lk.toUpperCase() }}</label>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -57,7 +96,10 @@
 <script setup>
 import { computed, onBeforeMount, onMounted, ref } from "vue";
 
-import { updateLocalVar, getLocalVar } from "../assets/scripts/initializeConfig";
+import {
+  updateLocalVar,
+  getLocalVar,
+} from "../assets/scripts/initializeConfig";
 
 import CardSensor from "../components/cardSensor.vue";
 
@@ -70,7 +112,7 @@ const getRouteMap = async () => {
   ).href;
 };
 
-const languagues = ref(["espanish", "english", "chinesse"]);
+const languages = ref(["espanish", "english", "chinesse"]);
 const layersStyles = ref(["base", "light", "dark", "printer"]);
 
 const cS = ref(0);

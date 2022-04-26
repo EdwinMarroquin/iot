@@ -14,7 +14,7 @@
     @media screen and (min-width: 770px) {
       grid-template-columns: repeat(1, 1fr);
       grid-template-rows: repeat(2, 1fr);
-      display:flex;
+      display: flex;
       flex-direction: column;
     }
     &-sensor,
@@ -52,111 +52,82 @@
 
   &-options {
     margin-left: 1rem;
-    flex:1;
+    flex: 1;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-right: 1rem;
+    &-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
     .option {
-      &-title{}
-      &-selections{
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid silver;
+      padding-bottom: 1rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &-title {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+      &-selections {
         &-item {
+          $size: 1.5rem;
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          &-label {
+            width: 5rem;
+            font-size: 1rem;
+            font-weight: 100;
+            padding-left: 1rem;
+          }
           input {
-            display:none;
+            display: none;
             & + label {
-              width: 70%;
+              width: calc($size * 3);
+              height: calc($size + calc($size / 3));
               position: relative;
-              display:flex;
-              margin:auto;
-              padding: calc()
+              display: flex;
+              justify-content: space-between;
+              margin: auto;
+              padding: calc($size / 6);
+              border-radius: $size;
+              background: $color_yellow;
+              position: relative;
+              &:after {
+                content: "";
+                width: $size;
+                height: $size;
+                border-radius: $size;
+                background: $color_red;
+                position: absolute;
+              }
+              .selection-label {
+                width: $size;
+                height: $size;
+                padding: calc($size / 8);
+                color: $color_red;
+                border-radius: $size;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
+            &:checked {
+              & + label {
+                &:after {
+                  margin-left: calc(100% - $size - 0.5rem);
+                }
+              }
             }
           }
         }
       }
-    }
-  }
-
-  &-lang,
-  &-map-item {
-    $size: 1.5rem;
-    margin: 1rem 0;
-    width: 10rem;
-    display: flex;
-    font-size: 0.8rem;
-    align-items: center;
-    input[type="radio"] {
-      display: none;
-      & + label {
-        width: 70%;
-        position: relative;
-        display: flex;
-        margin: auto;
-        padding: calc($size / 8);
-        padding-left: $size;
-        border-radius: $size;
-        background: silver;
-        justify-content: center;
-        align-items: center;
-        &:after {
-          content: "";
-          width: $size;
-          height: $size;
-          margin-left: auto;
-          border-radius: $size;
-        }
-      }
-      &:checked {
-        & + label {
-          &:after {
-            background: grey;
-          }
-        }
-      }
-    }
-  }
-
-  &-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-    .units {
-      $size: 1.5rem;
-      border: none;
-      display: flex;
-      align-items: center;
-      input {
-        display: none;
-        & + label {
-          margin: 0 calc($size / 4);
-          display: block;
-          background: silver;
-          height: $size;
-          width: $size * 2;
-          overflow: hidden;
-          border-radius: $size;
-          padding: calc($size / 8);
-          &:after {
-            content: "";
-            display: block;
-            width: $size;
-            height: $size;
-            border-radius: $size;
-            background: grey;
-          }
-        }
-        &:checked {
-          & + label {
-            &:after {
-              margin-left: $size;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  &-map {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
-    @media screen and (min-width: 770px) {
     }
   }
 }
