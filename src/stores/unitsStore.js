@@ -3,7 +3,7 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 export const useUnitsStore = defineStore({
   id: "unitsStore",
   state: () => ({
-    celcius: 1,
+    celcius: true,
     formatDate: 1,
     formatTime: 1,
   }),
@@ -11,14 +11,14 @@ export const useUnitsStore = defineStore({
     getCelcius: () =>
       localStorage.celcius !== undefined
         ? localStorage.celcius
-        : 0,
+        : true,
     getFormatDate: (state) => state.formatDate,
     getFormatTime: (state) => state.formatDate,
   },
   actions: {
     async setCelcius(c) {
-      this.$state.celcius = !c ? 0 : 1;
-      await localStorage.setItem("celcius", this.$state.celcius);
+      this.$state.celcius = !c;
+      await localStorage.setItem("celcius", !c);
     },
   },
 });
