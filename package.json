@@ -10,6 +10,7 @@
     "preview": "vite preview --port 5050 --host localhost"
   },
   "dependencies": {
+    "@turf/turf": "^6.5.0",
     "pinia": "^2.0.13",
     "register-service-worker": "^1.7.2",
     "vue": "^3.2.31",

@@ -1,5 +1,5 @@
 <template>
-  <LeafletMap :geoPoints="gJson" />
+  <LeafletMap :geoPoints="gJson"/>
 </template>
 
 <script setup>
