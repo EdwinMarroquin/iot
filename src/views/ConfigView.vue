@@ -50,7 +50,7 @@
               <div class="option-selections-item-label">
                 {{ lk.toUpperCase() }}
               </div>
-              <input type="radio" name="layer" :id="`lng${li}`" :value="lk"
+              <input type="radio" name="language" :id="`lng${li}`" :value="lk"
                 @change="updateLang" />
               <label :for="`lng${li}`">
                 <div class="selection-label">SI</div>
