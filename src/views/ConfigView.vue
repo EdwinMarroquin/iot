@@ -17,7 +17,7 @@
                 Celcius
               </div>
               <input type="checkbox" name="units" id="units"
-                @input="updateUnits" />
+                @input="updateUnits" :checked="getCelciusChecked"/>
               <label for="units">
                 <div class="selection-label">SI</div>
                 <div class="selection-label">NO</div>
@@ -60,35 +60,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <div>
-        <div class="config-item">
-          UNIDADES :
-          <fieldset class="units">
-            °C
-            <input type="checkbox" name="units" id="units" @input="updateUnits"
-              :checked="getCelciusChecked" />
-            <label for="units"></label>
-            °F
-          </fieldset>
-        </div>
-        <div class="config-map">
-          <div class="config-map-item" v-for="(mk, mi) in layersStyles"
-            :key="mi">
-            <input type="radio" name="layer" :id="`sml${mi}`" :value="mk"
-              @change="updateStyleMap" :checked="getLayerChecked(mk)" />
-            <label :for="`sml${mi}`">{{ mk.toUpperCase() }}</label>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="config-title">LANGUAGUE</div>
-        <div class="config-lang" v-for="(lk, li) in languages" :key="li">
-          <input type="radio" name="lng" :id="`lng${li}`" :value="lk"
-            @change="updateLang" />
-          <label :for="`lng${li}`">{{ lk.toUpperCase() }}</label>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -127,7 +98,7 @@ const getLayerChecked = (e) => {
 };
 
 const updateUnits = async (e) => {
-  await updateLocalVar("celcius", !e.target.checked);
+  await updateLocalVar("celcius", e.target.checked);
   cS.value++;
 };
 
@@ -141,10 +112,10 @@ const updateStyleMap = async (e) => {
 };
 
 onBeforeMount(async () => {
-  getCelciusChecked;
-});
+  });
 
 onMounted(async () => {
+  getCelciusChecked;
   getRouteMap();
 });
 </script>

@@ -4,8 +4,8 @@ const c2f = (c) => c * (9 / 5) + 32;
 
 const f2c = (t) => (t - 32) * (5 / 9);
 
-const parseUnits = (v) => {
-  return localStorage.getItem("celcius")
+const parseUnits = async (v) => {
+  return localStorage.getItem("celcius") !== true
     ? `${parseFloat(c2f(v)).toFixed(2)} °F`
     : `${parseFloat(v).toFixed(2)} °C`;
 };

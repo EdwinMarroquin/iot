@@ -68,7 +68,7 @@ export const stations = [
   {
     id: 1662545,
     name: "Estacion 012",
-    latitude: 4.575553,
-    longitude: -74.155972,
+    latitude: 4.6103523,
+    longitude: -74.0712984,
   },
 ];

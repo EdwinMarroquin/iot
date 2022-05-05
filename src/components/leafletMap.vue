@@ -31,18 +31,32 @@ const spacing = ref(1)
 
 const grid = pointGrid(extend.value, spacing.value, {unit:"kilometers"});
 
-console.log(grid)
-
 for (var i = 0; i < grid.features.length; i++) {
   grid.features[i].properties.latitude = Math.random() * 10;
   grid.features[i].properties.longitude = Math.random() * 10;
   grid.features[i].properties.temperature = Math.random() * 10;
 }
-const breaks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const breaks = [1,215,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40];
 
-const lines = isobands(grid, breaks, { zProperty: 'temperature' });
 
-console.log(lines)
+const isobands_options = {
+  zProperty: "temperature",
+  commonProperties: {
+    "fill-opacity": 0.8
+  },
+  breaksProperties: [
+    {fill: "#e3e3ff"},
+    {fill: "#c6c6ff"},
+    {fill: "#a9aaff"},
+    {fill: "#8e8eff"},
+    {fill: "#7171ff"},
+    {fill: "#5554ff"},
+    {fill: "#3939ff"},
+    {fill: "#1b1cff"}
+  ]
+};
+
+const lines = isobands(grid, breaks, isobands_options);
 
 onMounted(async () => {
   let optionsMap = {

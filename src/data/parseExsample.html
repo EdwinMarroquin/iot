@@ -1,0 +1,115 @@
+<code class="hljs language-coffeescript">&lt;html&gt; &lt;head&gt;
+  &lt;title&gt;title&gt; &lt;link rel=<span
+    class="hljs-string">"stylesheet"</span> href=<span
+    class="hljs-string">"./include/ol.css"</span> type=<span
+    class="hljs-string">"text/css"</span> <span class="hljs-regexp">/&gt;
+    &lt;script src="./include/ol.js"&gt;script&gt; &lt;script
+    src="./include/kriging.js"&gt;script&gt; &lt;script
+    src='./include/turf.js'&gt;script&gt;head&gt;&lt;style&gt;style&gt;
+    &lt;body&gt; &lt;div id="map" class="map"&gt;div&gt; &lt;script&gt; let
+    params = { mapCenter: [121.483101, 31.227036], maxValue: 100, krigingModel:
+    'spherical',/</span><span
+    class="hljs-regexp">/model还可选'gaussian','spherical',exponential
+    krigingSigma2: 0, krigingAlpha: 100, canvasAlpha: 0.75,/</span><span
+    class="hljs-regexp">/canvas图层透明度 colors: ["#006837", "#1a9850", "#66bd63",
+    "#a6d96a", "#d9ef8b", "#ffffbf", "#fee08b", "#fdae61", "#f46d43", "#d73027",
+    "#a50026"], }; let baseLayer = new ol.layer.Tile({ title: "base", source:
+    new ol.source.OSM() }); let map = new ol.Map({ target: 'map', layers:
+    [baseLayer], view: new ol.View({ center: params.mapCenter, projection:
+    'EPSG:4326', zoom: 16 }) }); let WFSVectorSource = new ol.source.Vector();
+    let WFSVectorLayer = new ol.layer.Vector( { source: WFSVectorSource, });
+    map.addLayer(WFSVectorLayer); /</span><span
+    class="hljs-regexp">/添加选择和框选控件，按住Ctr键，使用鼠标框选采样点 let select = new
+    ol.interaction.Select(); map.addInteraction(select); let dragBox = new
+    ol.interaction.DragBox({ condition:
+    ol.events.condition.platformModifierKeyOnly }); map.addInteraction(dragBox);
+    /</span><span class="hljs-regexp">/创建15个位置随机、属性值随机的特征点 for (let i = 0; i
+    &lt; 15; i++) { let feature = new ol.Feature({ geometry: new ol.geom.Point(
+    [ params.mapCenter[0] + Math.random() * 0.01 - .005, params.mapCenter[1] +
+    Math.random() * 0.01 - .005 ] ), value: Math.round(Math.random() *
+    params.maxValue) }); feature.setStyle(new ol.style.Style({ image: new
+    ol.style.Circle({ radius: 6, fill: new ol.style.Fill({ color: "#00F" }) })
+    })); WFSVectorSource.addFeature(feature); } /</span><span
+    class="hljs-regexp">/设置框选事件 let selectedFeatures = select.getFeatures();
+    dragBox.on('boxend', () =&gt; { let extent =
+    dragBox.getGeometry().getExtent();
+    WFSVectorSource.forEachFeatureIntersectingExtent(extent, (feature) =&gt; {
+    selectedFeatures.push(feature); }); drawKriging(extent); });
+    dragBox.on('boxstart', () =&gt; { selectedFeatures.clear(); });
+    /</span><span class="hljs-regexp">/利用网格计算点集 const gridFeatureCollection =
+    function (grid, xlim, ylim) { var range =grid.zlim[1] - grid.zlim[0]; var i,
+    j, x, y, z; var n = grid.length;/</span><span class="hljs-regexp">/列数 var m
+    = grid[0].length;/</span><span class="hljs-regexp">/行数 var pointArray = [];
+    for (i = 0; i &lt; n ; i++) for (j = 0; j &lt; m ; j++) { x = (i) *
+    grid.width + grid.xlim[0]; y = (j) * grid.width + grid.ylim[0]; z =
+    (grid[i][j] - grid.zlim[0]) /</span> range; <span
+    class="hljs-keyword">if</span> (z &lt; <span class="hljs-number">0.0</span>)
+  z = <span class="hljs-number">0.0</span>; <span class="hljs-keyword">if</span>
+  (z &gt; <span class="hljs-number">1.0</span>) z = <span
+    class="hljs-number">1.0</span>; pointArray.push(turf.point([x, y], { value:
+  z })); } <span class="hljs-keyword">return</span> pointArray; } <span
+    class="hljs-regexp">//</span>绘制kriging插值图 let vectorLayer = <span
+    class="hljs-literal">null</span>; const drawKriging = <span
+    class="hljs-function"><span class="hljs-params">(extent)</span> =&gt;</span>
+  { let values = [], lngs = [], lats = []; selectedFeatures.forEach(feature
+  =&gt; { values.push(feature.values_.value);
+  lngs.push(feature.values_.geometry.flatCoordinates[<span
+    class="hljs-number">0</span>]);
+  lats.push(feature.values_.geometry.flatCoordinates[<span
+    class="hljs-number">1</span>]); }); <span class="hljs-keyword">if</span>
+  (values.length &gt; <span class="hljs-number">3</span>) { let variogram =
+  kriging.train( values, lngs, lats, params.krigingModel, params.krigingSigma2,
+  params.krigingAlpha ); let polygons = []; polygons.push([ [extent[<span
+    class="hljs-number">0</span>], extent[<span class="hljs-number">1</span>]],
+  [extent[<span class="hljs-number">0</span>], extent[<span
+    class="hljs-number">3</span>]], [extent[<span class="hljs-number">2</span>],
+  extent[<span class="hljs-number">3</span>]], [extent[<span
+    class="hljs-number">2</span>], extent[<span class="hljs-number">1</span>]]
+  ]); let grid = kriging.grid(polygons, variogram, <span
+    class="hljs-function"><span class="hljs-params">(extent[<span
+        class="hljs-number">2</span>] - extent[<span
+        class="hljs-number">0</span>])</span> / 500); let dragboxExtent =
+    extent; if <span class="hljs-params">(vectorLayer !== <span
+        class="hljs-literal">null</span>)</span> { map.removeLayer<span
+      class="hljs-params">(vectorLayer)</span>; } var vectorSource = new
+    ol.source.Vector<span class="hljs-params">()</span>; vectorLayer = new
+    ol.layer.Vector<span class="hljs-params">( { source: vectorSource, opacity:
+      <span class="hljs-number">0.7</span>, style: function (feature) { var
+      style = <span class="hljs-keyword">new</span> ol.style.Style({ fill: <span
+        class="hljs-keyword">new</span> ol.style.Fill({ color:
+      params.colors[<span
+        class="hljs-built_in">parseFloat</span>(feature.get(<span
+        class="hljs-string">'value'</span>).split(<span
+        class="hljs-string">'-'</span>)[<span class="hljs-number">1</span>]) *
+      <span class="hljs-number">10</span>] }) }) <span
+        class="hljs-keyword">return</span> style; } } )</span> //使用turf渲染等值面/线
+    let fc = gridFeatureCollection<span class="hljs-params">(grid, [extent[<span
+        class="hljs-number">0</span>], extent[<span
+        class="hljs-number">2</span>]], [extent[<span
+        class="hljs-number">1</span>], extent[<span
+        class="hljs-number">3</span>]])</span>; var collection =
+    turf.featureCollection<span class="hljs-params">(fc)</span>; var breaks =
+    [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]; var isobands =
+    turf.isobands<span class="hljs-params">(collection, breaks, { zProperty:
+      <span class="hljs-string">'value'</span> })</span>; function sortArea<span
+      class="hljs-params">(a,b)</span>{ return turf.area<span
+      class="hljs-params">(b)</span>-turf.area<span
+      class="hljs-params">(a)</span>; } //按照面积对图层进行排序，规避turf的一个bug
+    isobands.features.sort<span class="hljs-params">(sortArea)</span> var
+    polyFeatures = new ol.format.GeoJSON<span
+      class="hljs-params">()</span>.readFeatures<span
+      class="hljs-params">(isobands, { featureProjection: <span
+        class="hljs-string">'EPSG:4326'</span> })</span>
+    vectorSource.addFeatures<span class="hljs-params">(polyFeatures)</span>;
+    map.addLayer<span class="hljs-params">(vectorLayer)</span>; } else {
+    alert<span class="hljs-params">(<span
+        class="hljs-string">"有效样点个数不足，无法插值"</span>)</span>; } } let extent =
+    [params.mapCenter[0] - .005, params.mapCenter[1] - .005, params.mapCenter[0]
+    + .005, params.mapCenter[1] + .005];
+    WFSVectorSource.forEachFeatureIntersectingExtent<span
+      class="hljs-params">(extent, (feature) =&gt; {
+      selectedFeatures.push(feature); })</span>; drawKriging<span
+      class="hljs-params">(extent)</span>;script&gt;body&gt;&nbsp;html&gt;</span></code>
+<div class="hljs-button signin" data-title="登录后复制"
+  data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4334&quot;}"
+  onclick="hljs.signin(event)"></div>

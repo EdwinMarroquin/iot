@@ -70,8 +70,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
+import { getDataChannel } from "../assets/scripts/getDataChannels";
 import { addZeros, parseUnits } from "@/assets/scripts/converUnits.js";
 
 const props = defineProps({
