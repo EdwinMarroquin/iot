@@ -87,7 +87,7 @@
             padding-left: 1rem;
           }
           input {
-            display: none;
+            // display: none;
             & + label {
               width: calc($size * 3);
               height: calc($size + calc($size / 3));

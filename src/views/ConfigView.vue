@@ -14,13 +14,13 @@
           <div class="option-selections">
             <div class="option-selections-item">
               <div class="option-selections-item-label">
-                Celcius
+                Temperatura
               </div>
               <input type="checkbox" name="units" id="units"
                 @input="updateUnits" :checked="getCelciusChecked"/>
               <label for="units">
-                <div class="selection-label">SI</div>
-                <div class="selection-label">NO</div>
+                <div class="selection-label">°C</div>
+                <div class="selection-label">°F</div>
               </label>
             </div>
           </div>
@@ -98,7 +98,7 @@ const getLayerChecked = (e) => {
 };
 
 const updateUnits = async (e) => {
-  await updateLocalVar("celcius", e.target.checked);
+  await updateLocalVar("celcius", !e.target.checked);
   cS.value++;
 };
 
@@ -112,10 +112,10 @@ const updateStyleMap = async (e) => {
 };
 
 onBeforeMount(async () => {
+  getCelciusChecked;
   });
 
 onMounted(async () => {
-  getCelciusChecked;
   getRouteMap();
 });
 </script>
