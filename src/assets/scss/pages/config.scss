@@ -87,7 +87,7 @@
             padding-left: 1rem;
           }
           input {
-            // display: none;
+            display: none;
             & + label {
               width: calc($size * 3);
               height: calc($size + calc($size / 3));
@@ -97,21 +97,22 @@
               margin: auto;
               padding: calc($size / 6);
               border-radius: $size;
-              background: $color_yellow;
+              background: whitesmoke;
+              box-shadow:inset 0 0 0 1px silver;
               position: relative;
               &:after {
                 content: "";
                 width: $size;
                 height: $size;
                 border-radius: $size;
-                background: $color_red;
+                background: silver;
                 position: absolute;
               }
               .selection-label {
                 width: $size;
                 height: $size;
                 padding: calc($size / 8);
-                color: $color_red;
+                color: silver;
                 border-radius: $size;
                 display: flex;
                 justify-content: center;
@@ -120,8 +121,14 @@
             }
             &:checked {
               & + label {
+                background-color: $color_yellow;
+                box-shadow:inset 0 0 0 1px $color_yellow;
                 &:after {
                   margin-left: calc(100% - $size - 0.5rem);
+                  background:$color_red ;
+                }
+                .selection-label {
+                  color: $color_red;
                 }
               }
             }

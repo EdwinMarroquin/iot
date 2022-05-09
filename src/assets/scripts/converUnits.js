@@ -8,7 +8,7 @@ const f2c = (t) => (t - 32) * (5 / 9);
 
 const parseUnits = (v) => {
   let res;
-  if (getLocalVar("celcius") === false) {
+  if (getLocalVar("unitsTemp") === "fahrenheit") {
     res = `${parseFloat(c2f(v)).toFixed(2)} °F`;
   } else {
     res = `${parseFloat(v).toFixed(2)} °C`;

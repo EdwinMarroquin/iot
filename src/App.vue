@@ -26,8 +26,9 @@ const listRoutes = ref([
 
 const initializeVariables = async () => {
   await setLocalVars([
-    { name: "celcius", value: true },
+    { name: "unitsTemp", value: "celcius" },
     { name: "layername", value: "base" },
+    { name: "language", value: "spanish" },
   ]);
 };
 

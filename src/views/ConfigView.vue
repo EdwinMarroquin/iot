@@ -10,17 +10,18 @@
       <h1 class="config-options-title">CONFIGURACIÓN</h1>
       <div class="config-options-option">
         <div class="option">
-          <div class="option-title">Unidades</div>
+          <div class="option-title">Temperatura</div>
           <div class="option-selections">
-            <div class="option-selections-item">
+            <div class="option-selections-item" v-for="(uTk, uTi) in unitsTemp"
+              :key="uTi">
               <div class="option-selections-item-label">
-                Temperatura
+                {{ uTk.toUpperCase() }}
               </div>
-              <input type="checkbox" name="units" id="units"
-                @input="updateUnits" :checked="getCelciusChecked"/>
-              <label for="units">
-                <div class="selection-label">°C</div>
-                <div class="selection-label">°F</div>
+              <input type="radio" name="unitsTemp" :id="`sml${uTi}`" :value="uTk"
+                @change="updateUnits" :checked="getUnitsTempChecked(uTk)" />
+              <label :for="`sml${uTi}`">
+                <div class="selection-label">SI</div>
+                <div class="selection-label">NO</div>
               </label>
             </div>
           </div>
@@ -51,7 +52,7 @@
                 {{ lk.toUpperCase() }}
               </div>
               <input type="radio" name="language" :id="`lng${li}`" :value="lk"
-                @change="updateLang" />
+                @change="updateLang" :checked="getLanguage(lk)"  />
               <label :for="`lng${li}`">
                 <div class="selection-label">SI</div>
                 <div class="selection-label">NO</div>
@@ -83,26 +84,32 @@ const getRouteMap = async () => {
   ).href;
 };
 
-const languages = ref(["espanish", "english", "chinesse"]);
+const unitsTemp = ref(["celcius", "fahrenheit"]);
+const languages = ref(["spanish", "english", "chinesse"]);
 const layersStyles = ref(["base", "light", "dark", "printer"]);
 
 const cS = ref(0);
 const mS = ref(0);
 
-const getCelciusChecked = computed(() => {
-  return getLocalVar("celcius");
-});
+const getUnitsTempChecked = (e) => {
+  return getLocalVar("unitsTemp") === e ? true : false;
+};
 
 const getLayerChecked = (e) => {
   return getLocalVar("layername") === e ? true : false;
 };
 
-const updateUnits = async (e) => {
-  await updateLocalVar("celcius", !e.target.checked);
+const getLanguage = (e) => {
+  return getLocalVar("language") === e ? true : false;
+};
+
+const updateUnits = (e) => {
+  updateLocalVar("unitsTemp", e.target.value);
   cS.value++;
 };
 
 const updateLang = async (e) => {
+  updateLocalVar("language", e.target.value);
   console.log(await e.target.value);
 };
 
