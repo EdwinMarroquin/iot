@@ -98,21 +98,25 @@
               padding: calc($size / 6);
               border-radius: $size;
               background: whitesmoke;
-              box-shadow:inset 0 0 0 1px silver;
+              box-shadow:inset 0 0 0 1px $color_red;
               position: relative;
+              opacity: .3;
+              &:hover {
+                opacity: 1;
+              }
               &:after {
                 content: "";
                 width: $size;
                 height: $size;
                 border-radius: $size;
-                background: silver;
+                background: $color_red;
                 position: absolute;
               }
               .selection-label {
                 width: $size;
                 height: $size;
                 padding: calc($size / 8);
-                color: silver;
+                color: $color_red;
                 border-radius: $size;
                 display: flex;
                 justify-content: center;
@@ -123,6 +127,7 @@
               & + label {
                 background-color: $color_yellow;
                 box-shadow:inset 0 0 0 1px $color_yellow;
+                opacity: 1;
                 &:after {
                   margin-left: calc(100% - $size - 0.5rem);
                   background:$color_red ;

@@ -17,9 +17,9 @@
               <div class="option-selections-item-label">
                 {{ uTk.toUpperCase() }}
               </div>
-              <input type="radio" name="unitsTemp" :id="`sml${uTi}`" :value="uTk"
+              <input type="radio" name="unitsTemp" :id="`unit${uTi}`" :value="uTk"
                 @change="updateUnits" :checked="getUnitsTempChecked(uTk)" />
-              <label :for="`sml${uTi}`">
+              <label :for="`unit${uTi}`">
                 <div class="selection-label">SI</div>
                 <div class="selection-label">NO</div>
               </label>
