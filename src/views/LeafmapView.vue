@@ -5,7 +5,13 @@
 <script setup>
 import { ref } from "vue";
 import LeafletMap from "@/components/leafletMap.vue";
+
+import { stations } from "../data/stations";
+import { getDataChannel } from "../assets/scripts/getDataChannels";
+
 import geojson from "@/data/bogotaShape.json";
+
+stations.forEach((s, i) => getDataChannel(s.id))
 
 const gJson = ref(geojson);
 

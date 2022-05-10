@@ -3,6 +3,7 @@ const getDataChannel = async (idChannel) => {
     `https://api.thingspeak.com/channels/${idChannel}/feeds.json`
   );
   const d = await data.json();
+  console.log(d);
   return await d;
 };
 const getAllDataChannels = () => {};

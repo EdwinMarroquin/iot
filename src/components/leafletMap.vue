@@ -27,9 +27,29 @@ function randomRange(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+function average(val1, val2) {
+  return (val1 + val2) / 2;
+}
+
 const L = leaflet;
 
-const extend = ref([-74.217, 4.465, -74.003, 4.791]);
+const limitPoints = [
+  {
+    longitude: -74.217,
+    latitude: 4.465,
+  },
+  {
+    longitude: -74.003,
+    latitude: 4.791,
+  },
+];
+
+const extend = ref([
+  limitPoints[0].longitude,
+  limitPoints[0].latitude,
+  limitPoints[1].longitude,
+  limitPoints[1].latitude,
+]);
 
 const spacing = ref(1);
 
@@ -43,12 +63,12 @@ for (var i = 0; i < grid.features.length; i++) {
 
 const breaks = Array(20)
   .fill()
-  .map((el, i) => (i + 1)*2);
+  .map((el, i) => (i + 1) * 2);
 
 console.log(breaks);
 
 const isolines_options = {
-  resolution: 2,
+  resolution: 15,
   zProperty: "temperature",
   commonProperties: {
     "fill-opacity": 0.5,
@@ -74,8 +94,10 @@ onMounted(async () => {
   };
 
   const map = L.map("map", {
-    center: [4.631, -74.1136195],
-    // center: [4.6513702, -74.1136195],
+    center: [
+      average(limitPoints[0].latitude, limitPoints[1].latitude),
+      average(limitPoints[0].longitude, limitPoints[1].longitude),
+    ],
     zoom: 11,
   });
 
