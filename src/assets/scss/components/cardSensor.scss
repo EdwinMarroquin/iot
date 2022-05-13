@@ -52,8 +52,9 @@
   color: $color_black;
   border-radius: 0.5rem;
   min-width: 7rem;
+  user-select: none;
   &-title {
-    max-width: 10rem;
+    width: 100%;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
@@ -105,4 +106,10 @@
   .card-sensor-content-info-icon {
     color: $color_yellow;
   }
+}
+
+.sensor-inactive {
+  user-select: none;
+  pointer-events: none;
+  opacity: .5;
 }
