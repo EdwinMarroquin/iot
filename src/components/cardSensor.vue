@@ -1,9 +1,6 @@
 <template>
   <Transition name="fade" mode="out-in">
-    <div
-      v-if="rendered === false"
-      class="card-sensor animated"
-    >
+    <div v-if="rendered === false" class="card-sensor animated">
       <div class="card-sensor-title">CARD SENSOR</div>
 
       <div class="card-sensor-content datetime">
@@ -20,14 +17,20 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title">Temperature</div>
         <div class="card-sensor-content-info">
-          <div class="card-sensor-content-info-icon fad fa-temperature-sun"></div>00.00 °C
+          <div
+            class="card-sensor-content-info-icon fad fa-temperature-sun"
+          ></div>
+          00.00 °O
         </div>
       </div>
 
       <div class="card-sensor-content">
         <div class="card-sensor-content-title">Humidity</div>
         <div class="card-sensor-content-info">
-          <div class="card-sensor-content-info-icon fad fa-hand-holding-water"></div>00.00 %
+          <div
+            class="card-sensor-content-info-icon fad fa-hand-holding-water"
+          ></div>
+          00.00 %
         </div>
       </div>
     </div>
@@ -35,7 +38,10 @@
       v-else
       class="card-sensor"
       :to="dummy ? '' : `/sensor/${sensorId}`"
-      :class="[active ? 'sensor-active' : '']"
+      :class="[
+        inactive ? 'sensor-inactive' : '',
+        active ? 'sensor-active' : '',
+      ]"
     >
       <div class="card-sensor-title">{{ info.name }}</div>
 
@@ -53,7 +59,9 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title">Temperatura:</div>
         <div class="card-sensor-content-info">
-          <div class="card-sensor-content-info-icon fad fa-temperature-sun"></div>
+          <div
+            class="card-sensor-content-info-icon fad fa-temperature-sun"
+          ></div>
           {{ parseUnits(curr.field1) }}
         </div>
       </div>
@@ -61,7 +69,9 @@
       <div class="card-sensor-content">
         <div class="card-sensor-content-title">Humedad:</div>
         <div class="card-sensor-content-info">
-          <div class="card-sensor-content-info-icon fad fa-hand-holding-water"></div>
+          <div
+            class="card-sensor-content-info-icon fad fa-hand-holding-water"
+          ></div>
           {{ parseFloat(curr.field2).toFixed(2) }} %
         </div>
       </div>
@@ -90,7 +100,30 @@ const info = ref({});
 const prev = ref({});
 const curr = ref({});
 const active = ref(false);
+const inactive = ref(true);
 const rendered = ref(false);
+
+const getTimeFromISODateString = (isoDateString) => {
+  const date = new Date(isoDateString);
+  const days = `0${date.getUTCDate()}`.slice(-2);
+  const hours = `0${date.getUTCHours()}`.slice(-2);
+  const minutes = `0${date.getUTCMinutes()}`.slice(-2);
+  const seconds = `0${date.getUTCSeconds()}`.slice(-2);
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
+};
+
+// const compareActivity = (typeComapre, rangeCompare, d, n = new Date()) => {
+//   if(typeCompare == 'hours') {
+//     if (`0${n.getUTCDate()}`.slice(-2) - d
+//   }
+//   if(rangeCompare == 'minutes') {}
+//   if(rangeCompare == 'seconds') {}
+// };
 
 const getData = async () => {
   const data = await fetch(
@@ -111,6 +144,10 @@ const getData = async () => {
   curr.value.time = `${addZeros(dt.getHours())}:${addZeros(
     dt.getMinutes()
   )}:${addZeros(dt.getSeconds())}`;
+
+  if(curr.value.created_at){}
+
+  console.log(getTimeFromISODateString(curr.value.created_at))
 
   if (prev.value.created_at !== curr.value.created_at) {
     prev.value = curr.value;
@@ -153,22 +190,22 @@ onMounted(async () => {
 
 @keyframes pulse {
   0% {
-    opacity:.2;
+    opacity: 0.2;
   }
 
   50% {
-    opacity:.1;
+    opacity: 0.1;
   }
 
   100% {
-    opacity:.2;
+    opacity: 0.2;
   }
 }
 
 .animated {
   filter: grayscale(100%) blur(2px);
   animation-name: pulse;
-  animation-duration: .5s;
+  animation-duration: 0.5s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
 }
