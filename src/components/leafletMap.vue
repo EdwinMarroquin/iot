@@ -3,13 +3,15 @@
 </template>
 
 <script setup>
-import pointGrid from "@turf/point-grid";
-import isolines from "@turf/isolines";
 
 import leaflet from "leaflet";
+import isolines from "@turf/isolines";
+import { point, featureCollection } from "@turf/helpers";
+
 import { onMounted, ref } from "vue";
 
 import layers from "@/data/mapLayers";
+import { stations } from "@/data/stations.js";
 
 const props = defineProps({
   optionsMap: {
@@ -23,9 +25,9 @@ const props = defineProps({
   },
 });
 
-function randomRange(min, max) {
-  return Math.random() * (max - min) + min;
-}
+// function randomRange(min, max) {
+//   return Math.random() * (max - min) + min;
+// }
 
 function average(val1, val2) {
   return (val1 + val2) / 2;
@@ -44,48 +46,49 @@ const limitPoints = [
   },
 ];
 
-const extend = ref([
-  limitPoints[0].longitude,
-  limitPoints[0].latitude,
-  limitPoints[1].longitude,
-  limitPoints[1].latitude,
-]);
+// const extend = ref([
+//   limitPoints[0].longitude,
+//   limitPoints[0].latitude,
+//   limitPoints[1].longitude,
+//   limitPoints[1].latitude,
+// ]);
 
-const spacing = ref(1);
+// console.log(randomPoint(10, { bbox: extend }));
 
-const grid = pointGrid(extend.value, spacing.value, { unit: "kilometers" });
+const arrayPoints = stations.map((el) => {
+  return point([el.longitude, el.latitude]);
+});
 
-for (var i = 0; i < grid.features.length; i++) {
-  grid.features[i].properties.latitude = Math.random() * 1;
-  grid.features[i].properties.longitude = Math.random() * 1;
-  grid.features[i].properties.temperature = randomRange(15, 32);
-}
+
+// console.log(featureCollection(arrayPoints));
+
+// const spacing = ref(1);
+
+// const grid = pointGrid(extend.value, spacing.value, { unit: "kilometers" });
+
+// console.log(grid.features);
+
+// for (var i = 0; i < 12 ; i++) {
+//   grid.features[i].properties.latitude = stations[i].latitude;
+//   grid.features[i].properties.longitude = stations[i].longitude;
+//   grid.features[i].properties.temperature = randomRange(15, 32);
+// }
+
 
 const breaks = Array(20)
   .fill()
   .map((el, i) => (i + 1) * 2);
 
-console.log(breaks);
-
 const isolines_options = {
-  resolution: 15,
+  resolution: 2,
   zProperty: "temperature",
   commonProperties: {
     "fill-opacity": 0.5,
   },
-  breaksProperties: [
-    { fill: "#e3e3ff" },
-    { fill: "#c6c6ff" },
-    { fill: "#a9aaff" },
-    { fill: "#8e8eff" },
-    { fill: "#7171ff" },
-    { fill: "#5554ff" },
-    { fill: "#3939ff" },
-    { fill: "#1b1cff" },
-  ],
 };
 
-const lines = isolines(grid, breaks, isolines_options);
+const lines = isolines(featureCollection(arrayPoints), breaks, isolines_options);
+// const lines = isolines(grid, breaks, isolines_options);
 
 onMounted(async () => {
   let optionsMap = {

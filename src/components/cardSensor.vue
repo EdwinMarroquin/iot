@@ -39,8 +39,10 @@
       class="card-sensor"
       :to="dummy ? '' : `/sensor/${sensorId}`"
       :class="[
-        inactive ? 'sensor-inactive' : '',
-        active ? 'sensor-active' : '',
+        curr.inactive === true || curr.inactive === undefined
+          ? 'sensor-inactive'
+          : '',
+        curr.active ? 'sensor-active' : '',
       ]"
     >
       <div class="card-sensor-title">{{ info.name }}</div>
@@ -98,32 +100,30 @@ const props = defineProps({
 const feeds = ref({});
 const info = ref({});
 const prev = ref({});
-const curr = ref({});
-const active = ref(false);
-const inactive = ref(true);
+const curr = ref({
+  active: true,
+  inactive: false,
+});
 const rendered = ref(false);
 
-const getTimeFromISODateString = (isoDateString) => {
-  const date = new Date(isoDateString);
-  const days = `0${date.getUTCDate()}`.slice(-2);
-  const hours = `0${date.getUTCHours()}`.slice(-2);
-  const minutes = `0${date.getUTCMinutes()}`.slice(-2);
-  const seconds = `0${date.getUTCSeconds()}`.slice(-2);
+const getTimeSeconds = (dateString) => {
+  const d = new Date(dateString);
+  const dy = d.getUTCFullYear() * (60 ^ 2) * 24 * 30 * 365;
+  const dm = d.getUTCMonth() * (60 ^ 2) * 24 * 30;
+  const dd = d.getUTCDate() * (60 ^ 2) * 24;
+  const dho = d.getUTCHours() * (60 ^ 2);
+  const dmi = d.getUTCMinutes() * (60 ^ 1);
+  const dse = d.getUTCSeconds() * (60 ^ 0);
   return {
-    days,
-    hours,
-    minutes,
-    seconds,
+    dy,
+    dm,
+    dd,
+    dho,
+    dmi,
+    dse,
+    result: dy + dm + dd + dho + dmi + dse,
   };
 };
-
-// const compareActivity = (typeComapre, rangeCompare, d, n = new Date()) => {
-//   if(typeCompare == 'hours') {
-//     if (`0${n.getUTCDate()}`.slice(-2) - d
-//   }
-//   if(rangeCompare == 'minutes') {}
-//   if(rangeCompare == 'seconds') {}
-// };
 
 const getData = async () => {
   const data = await fetch(
@@ -135,6 +135,9 @@ const getData = async () => {
   info.value = d.channel;
   curr.value = feeds.value[feeds.value.length - 1];
 
+  curr.value.inactive = false;
+  curr.value.active = true
+
   const dt = new Date(curr.value.created_at);
 
   curr.value.date = `${await addZeros(dt.getDate())}/${await addZeros(
@@ -145,15 +148,18 @@ const getData = async () => {
     dt.getMinutes()
   )}:${addZeros(dt.getSeconds())}`;
 
-  if(curr.value.created_at){}
-
-  console.log(getTimeFromISODateString(curr.value.created_at))
+  curr.value.inactive =
+    getTimeSeconds(new Date()).result -
+      getTimeSeconds(curr.value.created_at).result >
+    1200
+      ? true
+      : false;
 
   if (prev.value.created_at !== curr.value.created_at) {
     prev.value = curr.value;
-    active.value = true;
+    curr.value.active = true;
   } else {
-    active.value = false;
+    curr.value.active = false;
   }
 
   rendered.value = true;
@@ -163,7 +169,7 @@ onMounted(async () => {
   if (!props.dummy) {
     await setInterval(async () => {
       await getData();
-    }, 2000);
+    }, 1000);
   } else {
     rendered.value = true;
     info.value.name = "Card Sensor";
