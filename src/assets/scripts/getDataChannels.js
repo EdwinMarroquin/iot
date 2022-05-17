@@ -8,7 +8,7 @@ const getDataChannel = async (idChannel) => {
   return await d;
 };
 
-const getLastDataChannel = async (idChannel) => {
+const getLastDataChannel =  async (idChannel) => {
   let response = {
     channel: {
       id: null,
@@ -25,7 +25,7 @@ const getLastDataChannel = async (idChannel) => {
     },
   };
   const data = await fetch(
-    `https://api.thingspeak.com/channels/${idChannel}/feeds.json?result=1`
+    `https://api.thingspeak.com/channels/${idChannel}/feeds.json?results=1`
   );
   const d = await data.json();
   const date = new Date(d.feeds[0].created_at);
@@ -41,9 +41,9 @@ const getLastDataChannel = async (idChannel) => {
     },
     lastFeed: {
       created_at: d.feeds[0].created_at,
-      date: `${await addZeros(date.getDate())}/${await addZeros(
+      date: `${ addZeros(date.getDate())}/${ addZeros(
         date.getMonth()
-      )}/${await addZeros(date.getFullYear())}`,
+      )}/${ addZeros(date.getFullYear())}`,
       time: `${addZeros(date.getHours())}:${addZeros(
         date.getMinutes()
       )}:${addZeros(date.getSeconds())}`,
@@ -51,11 +51,14 @@ const getLastDataChannel = async (idChannel) => {
       humidity: parseFloat(d.feeds[0].field2),
     },
   };
-  return await response;
+  return response;
 };
-const getAllDataChannels = () => {
+
+const getAllDataChannels = (stations) => {
   const data = [];
-  return data;
+  return  stations.map((el) => {
+    return getLastDataChannel(el.id)
+  })
 };
 
 export { getDataChannel, getLastDataChannel, getAllDataChannels };

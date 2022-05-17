@@ -6,12 +6,16 @@
 
 import leaflet from "leaflet";
 import isolines from "@turf/isolines";
+import interpolate from "@turf/interpolate";
 import { point, featureCollection } from "@turf/helpers";
 
 import { onMounted, ref } from "vue";
 
 import layers from "@/data/mapLayers";
 import { stations } from "@/data/stations.js";
+
+import { getAllDataChannels } from "@/assets/scripts/getDataChannels";
+
 
 const props = defineProps({
   optionsMap: {
@@ -54,41 +58,28 @@ const limitPoints = [
 // ]);
 
 // console.log(randomPoint(10, { bbox: extend }));
-
-const arrayPoints = stations.map((el) => {
-  return point([el.longitude, el.latitude]);
-});
-
-
-// console.log(featureCollection(arrayPoints));
-
-// const spacing = ref(1);
-
-// const grid = pointGrid(extend.value, spacing.value, { unit: "kilometers" });
-
-// console.log(grid.features);
-
-// for (var i = 0; i < 12 ; i++) {
-//   grid.features[i].properties.latitude = stations[i].latitude;
-//   grid.features[i].properties.longitude = stations[i].longitude;
-//   grid.features[i].properties.temperature = randomRange(15, 32);
-// }
+const allDataChannels = await Promise.all(
+  getAllDataChannels(stations).map(el => el)
+  );
 
 
-const breaks = Array(20)
+const arrayPointsT = featureCollection(allDataChannels.map((el) => {
+  return point([parseFloat(el.channel.longitude), parseFloat(el.channel.latitude)], {elev: parseFloat(el.lastFeed.temperature)});
+}));
+
+const options_interpol = {
+  gridType: 'points',
+  property: 'elev',
+  units: 'kilometers'
+}
+
+const interpoled_points = interpolate(arrayPointsT, 1, options_interpol);
+
+const breaks = Array(10)
   .fill()
-  .map((el, i) => (i + 1) * 2);
+  .map((el, i) => i);
 
-const isolines_options = {
-  resolution: 2,
-  zProperty: "temperature",
-  commonProperties: {
-    "fill-opacity": 0.5,
-  },
-};
-
-const lines = isolines(featureCollection(arrayPoints), breaks, isolines_options);
-// const lines = isolines(grid, breaks, isolines_options);
+const lines = isolines(interpoled_points, breaks, {zProperty: 'elev'});
 
 onMounted(async () => {
   let optionsMap = {
@@ -109,10 +100,7 @@ onMounted(async () => {
     optionsMap
   ).addTo(map);
 
-  L.geoJson(lines, {
-    weight: 1,
-    color: "#00f2",
-  }).addTo(map);
+  L.geoJson(lines,{}).addTo(map);
 
   if (props.geoPoints !== {} && props.geoPoints.lenght !== 0) {
     L.geoJSON(props.geoPoints, {
