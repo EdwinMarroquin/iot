@@ -3,10 +3,10 @@
 </template>
 
 <script setup>
-
 import leaflet from "leaflet";
 import isolines from "@turf/isolines";
 import interpolate from "@turf/interpolate";
+import { addZeros } from "@/assets/scripts/converUnits.js";
 import { point, featureCollection } from "@turf/helpers";
 
 import { onMounted, ref } from "vue";
@@ -16,6 +16,7 @@ import { stations } from "@/data/stations.js";
 
 import { getAllDataChannels } from "@/assets/scripts/getDataChannels";
 
+const dataChannels = ref([]);
 
 const props = defineProps({
   optionsMap: {
@@ -50,36 +51,82 @@ const limitPoints = [
   },
 ];
 
-// const extend = ref([
-//   limitPoints[0].longitude,
-//   limitPoints[0].latitude,
-//   limitPoints[1].longitude,
-//   limitPoints[1].latitude,
-// ]);
+const extend = ref([
+  limitPoints[0].longitude,
+  limitPoints[0].latitude,
+  limitPoints[1].longitude,
+  limitPoints[1].latitude,
+]);
 
-// console.log(randomPoint(10, { bbox: extend }));
-const allDataChannels = await Promise.all(
-  getAllDataChannels(stations).map(el => el)
+// const allDataChannels = await Promise.all(
+//   getAllDataChannels(stations).map(el => el)
+// );
+
+stations.forEach(async (s) => {
+
+  const data = fetch(
+    `https://api.thingspeak.com/channels/${s.id}/feeds.json?results=1`
   );
+  await data
+    .then((e) => e.json())
+    .then(async (dat) => {
+      var d = dat;
+      const date = new Date(d.feeds[0].created_at);
 
+      let response = {
+        channel: {
+          id: d.channel.id,
+          name: d.channel.name,
+          field1: d.channel.field1,
+          field2: d.channel.field2,
+          latitude: parseFloat(d.channel.latitude),
+          longitude: parseFloat(d.channel.longitude),
+        },
+        lastFeed: {
+          created_at: d.feeds[0].created_at,
+          date: `${addZeros(date.getDate())}/${addZeros(
+            date.getMonth()
+          )}/${addZeros(date.getFullYear())}`,
+          time: `${addZeros(date.getHours())}:${addZeros(
+            date.getMinutes()
+          )}:${addZeros(date.getSeconds())}`,
+          temperature: parseFloat(d.feeds[0].field1),
+          humidity: parseFloat(d.feeds[0].field2),
+        },
+      };
+      console.log(response)
+      await dataChannels.value.push(response);
+    });
+});
 
-const arrayPointsT = featureCollection(allDataChannels.map((el) => {
-  return point([parseFloat(el.channel.longitude), parseFloat(el.channel.latitude)], {elev: parseFloat(el.lastFeed.temperature)});
-}));
+// // console.log(allDataChannels)
+
+const arrayPointsT = featureCollection(
+  dataChannels.value.map((el) => {
+    return point(
+      [parseFloat(el.channel.longitude), parseFloat(el.channel.latitude)],
+      {
+        zVal: parseFloat(el.lastFeed.temperature),
+      }
+    );
+  })
+);
 
 const options_interpol = {
-  gridType: 'points',
-  property: 'elev',
-  units: 'kilometers'
-}
+  gridType: "points",
+  property: "zVal",
+  units: "kilometers",
+};
 
-const interpoled_points = interpolate(arrayPointsT, 1, options_interpol);
+const interpoled_points = interpolate(arrayPointsT, 0.5, options_interpol);
 
-const breaks = Array(10)
-  .fill()
-  .map((el, i) => i);
+const breaks = [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
 
-const lines = isolines(interpoled_points, breaks, {zProperty: 'elev'});
+const options_lines = {
+  zProperty: "zVal",
+};
+
+const Tlines = isolines(interpoled_points, breaks, options_lines);
 
 onMounted(async () => {
   let optionsMap = {
@@ -87,7 +134,7 @@ onMounted(async () => {
     ...props.optionsMap,
   };
 
-  const map = L.map("map", {
+  const canvaMap = await L.map("map", {
     center: [
       average(limitPoints[0].latitude, limitPoints[1].latitude),
       average(limitPoints[0].longitude, limitPoints[1].longitude),
@@ -95,19 +142,22 @@ onMounted(async () => {
     zoom: 11,
   });
 
-  L.tileLayer(
-    layers[await localStorage.getItem("layername")].url,
+  await L.tileLayer(
+    layers[localStorage.getItem("layername")].url,
     optionsMap
-  ).addTo(map);
-
-  L.geoJson(lines,{}).addTo(map);
+  ).addTo(canvaMap);
 
   if (props.geoPoints !== {} && props.geoPoints.lenght !== 0) {
-    L.geoJSON(props.geoPoints, {
+    await L.geoJSON(props.geoPoints, {
       weight: 3,
       color: "#de000099",
-    }).addTo(map);
+    }).addTo(canvaMap);
   }
+
+  // await L.geoJson(Tlines, {
+  //   weight: 3,
+  //   color: "#de000099",
+  // }).addTo(canvaMap);
 });
 </script>
 

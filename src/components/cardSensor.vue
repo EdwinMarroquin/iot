@@ -178,6 +178,8 @@ onMounted(async () => {
       time: "00:00:00",
       field1: "00.00",
       field2: "00.00",
+      inactive: false,
+      active: true
     };
   }
 });
