@@ -17,9 +17,9 @@
               <div class="option-selections-item-label">
                 {{ uTk.toUpperCase() }}
               </div>
-              <input type="radio" name="unitsTemp" :id="`unit${uTi}`" :value="uTk"
+              <input type="radio" name="unitsTemp" :id="`temperature_units_${uTi}`" :value="uTk"
                 @change="updateUnits" :checked="getUnitsTempChecked(uTk)" />
-              <label :for="`unit${uTi}`">
+              <label :for="`temperature_units_${uTi}`">
                 <div class="selection-label">SI</div>
                 <div class="selection-label">NO</div>
               </label>
@@ -34,9 +34,9 @@
               <div class="option-selections-item-label">
                 {{ mk.toUpperCase() }}
               </div>
-              <input type="radio" name="layer" :id="`sml${mi}`" :value="mk"
+              <input type="radio" name="layer" :id="`style_layer_map_${mi}`" :value="mk"
                 @change="updateStyleMap" :checked="getLayerChecked(mk)" />
-              <label :for="`sml${mi}`">
+              <label :for="`style_layer_map_${mi}`">
                 <div class="selection-label">SI</div>
                 <div class="selection-label">NO</div>
               </label>
@@ -51,9 +51,26 @@
               <div class="option-selections-item-label">
                 {{ lk.toUpperCase() }}
               </div>
-              <input type="radio" name="language" :id="`lng${li}`" :value="lk"
+              <input type="radio" name="language" :id="`language_${li}`" :value="lk"
                 @change="updateLang" :checked="getLanguage(lk)"  />
-              <label :for="`lng${li}`">
+              <label :for="`language_${li}`">
+                <div class="selection-label">SI</div>
+                <div class="selection-label">NO</div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="option">
+          <div class="option-title">interpolacion</div>
+          <div class="option-selections">
+            <div class="option-selections-item" v-for="(ik, ii) in inerpolations"
+              :key="ii">
+              <div class="option-selections-item-label">
+                {{ ik.toUpperCase() }}
+              </div>
+              <input type="radio" name="interpolation" :id="`interpolation_${ii}`" :value="ik"
+                @change="updateInterpolation" :checked="getInterpolation(ik)"  />
+              <label :for="`interpolation_${ii}`">
                 <div class="selection-label">SI</div>
                 <div class="selection-label">NO</div>
               </label>
@@ -87,6 +104,7 @@ const getRouteMap = async () => {
 const unitsTemp = ref(["celcius", "fahrenheit"]);
 const languages = ref(["spanish", "english", "chinesse"]);
 const layersStyles = ref(["base", "light", "dark", "printer"]);
+const inerpolations = ref(["idw", "krigin", "half-krigin"]);
 
 const cS = ref(0);
 const mS = ref(0);
@@ -103,6 +121,10 @@ const getLanguage = (e) => {
   return getLocalVar("language") === e ? true : false;
 };
 
+const getInterpolation = (e) => {
+  return getLocalVar("interpolation") === e ? true : false;
+};
+
 const updateUnits = (e) => {
   updateLocalVar("unitsTemp", e.target.value);
   cS.value++;
@@ -110,17 +132,16 @@ const updateUnits = (e) => {
 
 const updateLang = async (e) => {
   updateLocalVar("language", e.target.value);
-  console.log(await e.target.value);
+};
+
+const updateInterpolation = async (e) => {
+  updateLocalVar("interpolation", e.target.value);
 };
 
 const updateStyleMap = async (e) => {
   updateLocalVar("layername", e.target.value);
   await getRouteMap();
 };
-
-onBeforeMount(async () => {
-  getCelciusChecked;
-  });
 
 onMounted(async () => {
   getRouteMap();

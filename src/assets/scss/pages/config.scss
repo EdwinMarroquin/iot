@@ -25,7 +25,7 @@
       @media screen and (min-width: 770px) {
         width: 100%;
         width: 25rem;
-        max-width: 25rem;
+        max-width: 15rem;
       }
     }
 
@@ -41,7 +41,7 @@
       align-items: center;
       @media screen and (min-width: 770px) {
         height: 100%;
-        max-width: 25rem;
+        max-width: 15rem;
       }
       img {
         position: absolute;
@@ -58,7 +58,7 @@
     padding-right: 1rem;
     &-title {
       font-size: 2rem;
-      margin-bottom: 1.5rem;
+      margin: 1rem 0;
     }
     .option {
       margin-bottom: 1.5rem;
@@ -73,7 +73,6 @@
       }
       &-selections {
         &-item {
-          $size: 1.5rem;
           display: flex;
           align-items: center;
           margin-bottom: 1rem;
@@ -87,6 +86,7 @@
             padding-left: 1rem;
           }
           input {
+            $size: 20px;
             display: none;
             & + label {
               width: calc($size * 3);
@@ -98,9 +98,9 @@
               padding: calc($size / 6);
               border-radius: $size;
               background: whitesmoke;
-              box-shadow:inset 0 0 0 1px $color_red;
+              box-shadow: inset 0 0 0 1px $color_red;
               position: relative;
-              opacity: .3;
+              opacity: 0.3;
               &:hover {
                 opacity: 1;
               }
@@ -111,26 +111,31 @@
                 border-radius: $size;
                 background: $color_red;
                 position: absolute;
+                left: calc($size/6 + ($size/2));
+                transform: translate(-50%);
+                transition: all 0.2s ease;
               }
               .selection-label {
                 width: $size;
                 height: $size;
-                padding: calc($size / 8);
+                padding: calc($size / 10);
                 color: $color_red;
                 border-radius: $size;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                font-size: $size * 0.65;
               }
             }
             &:checked {
               & + label {
                 background-color: $color_yellow;
-                box-shadow:inset 0 0 0 1px $color_yellow;
+                box-shadow: inset 0 0 0 1px $color_yellow;
                 opacity: 1;
                 &:after {
-                  margin-left: calc(100% - $size - 0.5rem);
-                  background:$color_red ;
+                  left: 100%;
+                  background: $color_red;
+                  transform: translate(calc(-100% - $size/6));
                 }
                 .selection-label {
                   color: $color_red;

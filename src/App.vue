@@ -29,6 +29,7 @@ const initializeVariables = async () => {
     { name: "unitsTemp", value: "celcius" },
     { name: "layername", value: "base" },
     { name: "language", value: "spanish" },
+    { name: "interpolation", value: "idw" },
   ]);
 };
 
