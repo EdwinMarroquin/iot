@@ -30,7 +30,7 @@
     "leaflet": "^1.7.1",
     "prettier": "^2.6.2",
     "sass": "^1.49.11",
-    "vite": "^2.9.1",
+    "vite": "^2.9.13",
     "vitest": "^0.8.4",
     "vue3-highcharts": "^0.1.3"
   }
